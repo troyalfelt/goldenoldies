@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +31,34 @@
     }
   </style>
 </head>
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+?>
+<?php if (isset($_POST['submit'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $sql = "SELECT email, password FROM user WHERE email='$email' AND password='$password' AND approved=1";
+  $result = mysqli_query($conn, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    echo 'Login Successful';
+  } else {
+    echo 'Incorrect username/password';
+  }
+}
+?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
   </header>
 <div class="login">
-  <form>
-    
+  <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method="post">
+    <input type="text" name="email" placeholder="email">
+    <input type="text" name = "password" placeholder="password">
+    <input type="submit" name="submit">
   </form>
   <div>
 
