@@ -3,61 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Register</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      align-content: space-between;
-      align-items: center;
-    }
-    header {
-      background-color: #7fffd4;
-      width: 100%;
-    }
-    form {
-      background-color: #7fffd4;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-around;
-      height: 550px;
-      width: 700px;
-    }
-    footer {
-      background-color: #C0C0C0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .register {
-      align-items: center;
-      background-color: #f0ffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 590px;
-      width: 100%;
-    }
-    .user {
-      display: flex;
-      flex-direction: column;
-    }
-    .patient {
-      display: flex;
-      flex-direction: column;
-      align-self: center;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
       <h1>Golden Oldies</h1>
   </header>
   <div class="register">
-    <form action="" method="post">
+    <form class="f-register" action="" method="post">
       <div class="user">
         <h1>Create New User</h1>
         <label for="role"><b>Select Role</b></label>
