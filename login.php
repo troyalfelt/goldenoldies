@@ -22,11 +22,28 @@ error_reporting(E_ALL);
       background-color: #7fffd4;
       width: 100%;
     }
+    form {
+      background-color: #7fffd4;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+    }
     footer {
       background-color: #C0C0C0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+    }
+    .login {
+      background-color: #f0ffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      height: 590px;
       width: 100%;
     }
   </style>
@@ -56,9 +73,19 @@ $conn = new mysqli($servername, $username, $password, $db);
   </header>
 <div class="login">
   <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method="post">
+<<<<<<< HEAD
     <input type="text" name="email" placeholder="email"/>
     <input type="text" name = "password" placeholder="password"/>
     <input type="submit" name="submit"/>
+=======
+  <h1>Login</h1>
+    <hr>
+    <label for="email"><b>Email</b></label><br>
+    <input id="email" name="email" type="text" placeholder="Enter Your Email" class="textbox"/></br></br>
+    <label for="password"><b>Password</b></label><br>
+    <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
+    <input type="submit" name="submit" class="btn" value="Sign In"></br></br>
+>>>>>>> de2dd4203dc5cad0e7df3f6420463aabffa6ff9d
   </form>
   <div>
 

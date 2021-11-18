@@ -18,7 +18,7 @@
       width: 100%;
     }
     a {
-      background-color: #00ffff;
+      background-color: #7fffd4;
       border-radius: 5px;
       color: black;
       font-size: 44pt;
