@@ -9,7 +9,7 @@
   <header>
       <h1>Golden Oldies</h1>
   </header>
-<div class="home">
+<div class="container">
   <div class="link"><a href="login.php">Login</a></div>
   <div class="link"><a href="register.php">Register</a></div>
 </div>

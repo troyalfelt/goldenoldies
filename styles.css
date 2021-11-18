@@ -21,6 +21,11 @@
   a:hover {
     color: #C0C0C0;
   }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 500px;
+}
   footer {
     background-color: #C0C0C0;
     display: flex;
@@ -28,8 +33,7 @@
     align-items: center;
     width: 100%;
   }
-  /*Home page*/
-  .home {
+  .container {
     background-color: #f0ffff;
     display: flex;
     flex-direction: column;
@@ -38,6 +42,7 @@
     height: 590px;
     width: 100%;
   }
+  /*Home page*/
   .link {
     align-items: center;
     display: flex;
@@ -46,15 +51,6 @@
     width: 200px;
   }
   /*Login page*/
-  .login {
-    background-color: #f0ffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 590px;
-    width: 100%;
-  }
   .f-login {
     background-color: #7fffd4;
     border-radius: 5px;
@@ -64,15 +60,6 @@
     width: 400px;
   }
   /*Register page*/
-  .register {
-    align-items: center;
-    background-color: #f0ffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 590px;
-    width: 100%;
-  }
   .f-register {
     background-color: #7fffd4;
     border-radius: 5px;
