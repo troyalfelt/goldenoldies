@@ -1,0 +1,27 @@
+user
+user_id(bigserial), fname, lname, email, phone, password, dob (date of birth),
+role_name, approved(either a 1 or 0, 1 is approved)
+
+roles
+role_name, access_lvl
+
+employee
+user_id, salary
+
+patient
+user_id, code, contact, relations, emer_phone, group, patien_id, admit_date,
+age, total_due
+
+family
+user_id, patient_id
+
+roster
+date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id,
+caregiver4_id
+
+appointment
+dr_id, patient_id, date, comment, morn_med, aft_med, night_med
+
+routine
+patient_id, date, morn_status, aft_status, night_status, breakfast, lunch,
+dinner, dr_appt

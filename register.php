@@ -9,19 +9,42 @@
   <header>
       <h1>Golden Oldies</h1>
   </header>
+  <?php
+  $servername = "localhost";
+  $username = "troyalfelt";
+  $password = "";
+  $db = 'test';
+  $conn = new mysqli($servername, $username, $password, $db);
+  if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+  ?>
+  <?php if (isset($_POST['submit'])) {
+      $fname = $_POST['fname'];
+      $lname = $_POST['lname'];
+      $email = $_POST['email'];
+      $phone = $_POST['phone'];
+      $password = $_POST['password'];
+      $dob = $_POST['dob'];
+      $role_name = $_POST['role_name'];
+      $sql = "INSERT INTO user (fname, lname, email, phone, password, dob, role_name) VALUES ('$fname', '$lname', '$email', '$phone', '$password', '$dob', '$role_name')";
+      if ($conn->query($sql) === TRUE) {
+  echo "New record created successfully";
+} else {
+  echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
+  }
+
+  ?>
   <div class="register">
     <form class="f-register" action="" method="post">
       <div class="user">
         <h1>Create New User</h1>
         <label for="role"><b>Select Role</b></label>
-        <select id="role" name="role">
-          <option value="admin">Admin</option>
-          <option value="supervisor">Supervisor</option>
-          <option value="doctor">Doctor</option>
-          <option value="careGiver">Care Giver</option>
-          <option value="patient">Patient</option>
-          <option value="family">Family member</option>
-        </select><br>
+        <input type="text" placeholder="Enter Role Name" name="role_name" id="role_name">
+        <br>
         <label for="fName"><b>First Name</b></label>
         <input type="text" placeholder="Enter First Name" name="fName" id="fName" required><br>
         <label for="lName"><b>Last Name</b></label>
@@ -32,11 +55,10 @@
         <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required><br>
         <label for="password"><b>Password</b></label>
         <input type="password" placeholder="Password" name="password" id="password" required><br>
-      </div>
-      <div class="patient">
-          <h2>For Patient</h2>
           <label for="dob"><b>Date of Birth</b></label>
           <input type="date" name="dob" id="dob"><br>
+            <div class="patient">
+              <h2>For Patients</h2>
           <label for="fCode"><b>Family Code</b></label>
           <input type="text" placeholder="Enter Code" name="fCode" id="fCode"><br>
           <label for="eContact"><b>Emergency Contact</b></label>
