@@ -1,3 +1,9 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +11,28 @@
   <title>New Roles</title>
   <link rel="stylesheet" type="text/css" href="../styles.css"/>
 </head>
+
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+?>
+<?php if (isset($_POST['submit'])) {
+  $role = $_POST['role'];
+  $access = $_POST['access'];
+  $sql = "INSERT INTO roles (roles, access) VALUES ('$role', '$access')";
+
+
+  if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+?>
+
 <body>
   <header>
       <h1>Golden Oldies</h1>
