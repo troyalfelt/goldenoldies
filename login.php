@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,19 +48,38 @@
     }
   </style>
 </head>
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+?>
+<?php if (isset($_POST['submit'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $sql = "SELECT email, password FROM user WHERE email='$email' AND password='$password' AND approved=1";
+  $result = mysqli_query($conn, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    echo 'Login Successful';
+  } else {
+    echo 'Incorrect username/password';
+  }
+}
+?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
   </header>
 <div class="login">
-  <form action="" method="post">
-    <h1>Login</h1>
+  <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method="post">
+  <h1>Login</h1>
     <hr>
     <label for="email"><b>Email</b></label><br>
     <input id="email" name="email" type="text" placeholder="Enter Your Email" class="textbox"/></br></br>
     <label for="password"><b>Password</b></label><br>
     <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
-    <input type="submit" class="btn" value="Sign In"></br></br>
+    <input type="submit" name="submit" class="btn" value="Sign In"></br></br>
   </form>
   <div>
 
