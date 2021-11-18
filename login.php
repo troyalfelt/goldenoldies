@@ -56,9 +56,9 @@ $conn = new mysqli($servername, $username, $password, $db);
   </header>
 <div class="login">
   <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method="post">
-    <input type="text" name="email" placeholder="email">
-    <input type="text" name = "password" placeholder="password">
-    <input type="submit" name="submit">
+    <input type="text" name="email" placeholder="email"/>
+    <input type="text" name = "password" placeholder="password"/>
+    <input type="submit" name="submit"/>
   </form>
   <div>
 
