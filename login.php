@@ -33,7 +33,7 @@ $conn = new mysqli($servername, $username, $password, $db);
   <header>
       <h1>Golden Oldies</h1>
   </header>
-<div class="login">
+<div class="container">
   <form class="f-login" action='<?php echo $_SERVER['PHP_SELF']; ?>' method="post">
   <h1>Login</h1>
     <hr>

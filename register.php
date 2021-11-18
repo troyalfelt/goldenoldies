@@ -9,7 +9,7 @@
   <header>
       <h1>Golden Oldies</h1>
   </header>
-  <div class="register">
+  <div class="container">
     <form class="f-register" action="" method="post">
       <div class="user">
         <h1>Create New User</h1>
