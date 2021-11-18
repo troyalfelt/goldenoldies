@@ -3,54 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      align-content: space-between;
-      align-items: center;
-    }
-    header {
-      background-color: #7fffd4;
-      width: 100%;
-    }
-    a {
-      background-color: #7fffd4;
-      border-radius: 5px;
-      color: black;
-      font-size: 44pt;
-      text-decoration: none;
-    }
-    a:hover {
-      color: #C0C0C0;
-    }
-    footer {
-      background-color: #C0C0C0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .home {
-      background-color: #f0ffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-      height: 590px;
-      width: 100%;
-    }
-    .link {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      height: 100px;
-      width: 200px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>

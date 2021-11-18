@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    align-items: center;
+  }
+  header {
+    background-color: #7fffd4;
+    width: 100%;
+  }
+  a {
+    background-color: #7fffd4;
+    border-radius: 5px;
+    color: black;
+    font-size: 44pt;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #C0C0C0;
+  }
+  footer {
+    background-color: #C0C0C0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  /*Home page*/
+  .home {
+    background-color: #f0ffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 590px;
+    width: 100%;
+  }
+  .link {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 200px;
+  }
+  /*Login page*/
+  .login {
+    background-color: #f0ffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 590px;
+    width: 100%;
+  }
+  .f-login {
+    background-color: #7fffd4;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+  }
+  /*Register page*/
+  .register {
+    align-items: center;
+    background-color: #f0ffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 590px;
+    width: 100%;
+  }
+  .f-register {
+    background-color: #7fffd4;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    height: 550px;
+    width: 700px;
+  }
+  .user {
+    display: flex;
+    flex-direction: column;
+  }
+  .patient {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
