@@ -69,7 +69,7 @@ $conn = new mysqli($servername, $username, $password, $db);
         <td></td>
         <td></td>
         <td></td>
-        td><form action="" method="post" class="">Yes
+        <td><form action="" method="post" class="">Yes
           <input type="checkbox" name="approved" value="1"/>No
             <input type="checkbox" name="approved" value="0"/>
         </td>
