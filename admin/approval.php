@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,40 +10,78 @@
   <title>Approval</title>
   <link rel="stylesheet" href="../styles.css">
 </head>
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+ ?>
+<?php if (isset($_POST['submit'])) {
+  $approved = $_POST['approved'];
+
+  $sql = "INSERT INTO user (approval) VALUES ('$approved')";
+
+  if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
   </header>
   <div class="container">
   <h2>Registration Approval</h2>
-    <table>
-      <tr>
-        <th>Name</th>
+  <table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Role</th>
-        <th>Approve</th>
-      </tr>
+        <th>Approval</th>
+    </tr>
+    <?php
+    $servername = "localhost";
+    $username = "troyalfelt";
+    $password = "";
+    $db = "test";
+
+     //Create connection
+    $conn = mysqli_connect($servername, $username, $password, $db);
+     //Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $sql = "SELECT fName, lName, role_name FROM user";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+    echo "<tr><td>". $row["fName"]. "</td><td>" . $row["lName"]. "</td><td>". $row["role_name"]. "</td></tr>";
+    }
+    }
+    $conn->close();
+    ?>
       <tr>
         <td></td>
         <td></td>
-        <td>
-          <label for="yes"><b>Yes</b></label>
-          <input type="checkbox" name="yes">
-          <label for="no"><b>No</b></label>
-          <input type="checkbox" name="no"><br>
+        <td></td>
+        <td><form action="" method="post" class="">Yes
+          <input type="checkbox" name="approved" value="1"/>No
+            <input type="checkbox" name="approved" value="0"/>
         </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <form action="" method="post">
-      <input type="submit" class="btn" name="submit" value="Okay">
-    </form>
-  </div>
-  <footer>
-      <h3>Contact Us</h3>
-      <p>000-000-0000</p>
-  </footer>
-</body>
-</html>
+        </tr>
+        </table>
+            <input type="submit" class="btn" name="submit" value="Okay">
+            <input type="reset" class="btn" name="submit" value="Cancel">
+          </form>
+        </div>
+        <footer>
+            <h3>Contact Us</h3>
+            <p>000-000-0000</p>
+        </footer>
+        </body>
+        </html>
