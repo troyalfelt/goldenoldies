@@ -17,6 +17,8 @@ $password = "";
 $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
 ?>
+
+
 <?php if (isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -29,7 +31,8 @@ $conn = new mysqli($servername, $username, $password, $db);
       $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
       $_SESSION['role_name'] = $row['role_name'];
       $_SESSION['access_lvl'] = $row['access_lvl'];
-      echo 'Welcome, ' . $_SESSION['name'];
+      echo 'Welcome, ' . $_SESSION['name'] . '<br/>';
+
     }
 
   } else {
@@ -37,6 +40,12 @@ $conn = new mysqli($servername, $username, $password, $db);
   }
 }
 ?>
+<?php
+  if (isset($_SESSION['access_lvl'])) {
+    echo $_SESSION['access_lvl'];
+  } else {
+    echo 'no lcuk';
+  }?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
@@ -54,6 +63,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 </div>
 <footer>
     <h3>Contact Us</h3>
+    <a href='admin/roles.php'/>roles</a>
     <p>000-000-0000</p>
 </footer>
 </body>

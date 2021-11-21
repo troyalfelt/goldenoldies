@@ -3,7 +3,16 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   ?>
-
+  <?php
+  session_start();
+  if (!isset($_SESSION['access_lvl'])) {
+    header("Location: ../login.php");
+  } else {
+    if ($_SESSION['access_lvl'] !== '1') {
+      header("Location: ../logoin.php");
+  }
+}
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +28,9 @@ $password = "";
 $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
 ?>
-<?php if (isset($_POST['submit'])) {
+
+  <?php
+  if (isset($_POST['submit'])) {
   $role = $_POST['role'];
   $access = $_POST['access'];
   $sql = "INSERT INTO role (role_name, access_lvl)/*roles (role, access)*/ VALUES ('$role', '$access')";
@@ -32,7 +43,6 @@ $conn = new mysqli($servername, $username, $password, $db);
   }
 }
 ?>
-
 <body>
   <header>
       <h1>Golden Oldies</h1>
