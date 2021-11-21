@@ -20,10 +20,18 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php if (isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $sql = "SELECT email, password FROM user WHERE email='$email' AND password='$password' AND approved=1";
+  $sql = "SELECT email, fname, lname, password, user.role_name, access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
   $result = mysqli_query($conn, $sql);
-  if (mysqli_num_rows($result) > 0) {
-    echo 'Login Successful';
+  if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+      session_start();
+      $_SESSION['email'] = $email;
+      $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
+      $_SESSION['role_name'] = $row['role_name'];
+      $_SESSION['access_lvl'] = $row['access_lvl'];
+      echo 'Welcome, ' . $_SESSION['name'];
+    }
+
   } else {
     echo 'Incorrect username/password';
   }

@@ -22,7 +22,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php if (isset($_POST['submit'])) {
   $role = $_POST['role'];
   $access = $_POST['access'];
-  $sql = "INSERT INTO roles (roles, access) VALUES ('$role', '$access')";
+  $sql = "INSERT INTO role (role_name, access_lvl)/*roles (role, access)*/ VALUES ('$role', '$access')";
 
 
   if ($conn->query($sql) === TRUE) {
