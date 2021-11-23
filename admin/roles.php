@@ -9,9 +9,10 @@ error_reporting(E_ALL);
     header("Location: ../login.php");
   } else {
     if ($_SESSION['access_lvl'] !== '1') {
-      header("Location: ../logoin.php");
+      header("Location: ../login.php");
   }
 }
+echo $_SESSION['access_lvl'];
     ?>
 <!DOCTYPE html>
 <html lang="en">
