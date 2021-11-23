@@ -1,8 +1,17 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-  ?>
+session_start();
+if (!isset($_SESSION['access_lvl'])) {
+  header("Location: ../login.php");
+} else {
+  if ($_SESSION['access_lvl'] !== '1') {
+    header("Location: ../login.php");
+}
+}
+
+echo $_SESSION['access_lvl'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,18 +26,8 @@ $password = "";
 $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
  ?>
-<?php if (isset($_POST['submit'])) {
-  $approved = $_POST['approved'];
 
-  $sql = "INSERT INTO user (approval) VALUES ('$approved')";
 
-  if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-}
-?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
@@ -40,9 +39,24 @@ $conn = new mysqli($servername, $username, $password, $db);
         <th>First Name</th>
         <th>Last Name</th>
         <th>Role</th>
-        <th>Approval</th>
+        <th>Approved</th>
     </tr>
-    <?php
+  <?php
+  if (isset($_POST['submit']))  {
+        $approved = $_POST['approved'];
+
+   $sql = "UPDATE user SET approved='1' WHERE approved=$approved";
+
+   if ($conn->query($sql) === TRUE) {
+    echo "Record updated successfully";
+   } else {
+    echo "Error updating record: " . $conn->error;
+   }
+
+   $conn->close();
+}
+?>
+<?php
     $servername = "localhost";
     $username = "troyalfelt";
     $password = "";
@@ -55,31 +69,34 @@ $conn = new mysqli($servername, $username, $password, $db);
       die("Connection failed: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT fName, lName, role_name FROM user";
+    $sql = "SELECT fname, lname, role_name FROM user WHERE approved = 0 ";
     $result = $conn->query($sql);
+
     if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-    echo "<tr><td>". $row["fName"]. "</td><td>" . $row["lName"]. "</td><td>". $row["role_name"]. "</td></tr>";
+    echo "<tr><td>". $row["fname"]. "</td><td>" . $row["lname"]. "</td><td>". $row["role_name"]. "</td><td><input type='checkbox' name='approved' value='".$row["approved"]."' >";
+}
     }
-    }
+
     $conn->close();
-    ?>
+  ?>
       <tr>
         <td></td>
         <td></td>
         <td></td>
-        <td><form action="" method="post" class="">Yes
-          <input type="checkbox" name="approved" value="1"/>No
-            <input type="checkbox" name="approved" value="0"/>
-        </td>
+          <form method = "post" action = "">
+                <input type="hidden" name="approved" value="approved">
         </tr>
         </table>
             <input type="submit" class="btn" name="submit" value="Okay">
-            <input type="reset" class="btn" name="submit" value="Cancel">
           </form>
         </div>
         <footer>
+        <script>  if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
             <h3>Contact Us</h3>
             <p>000-000-0000</p>
         </footer>
