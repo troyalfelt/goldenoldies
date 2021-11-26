@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Register</title>
-  <link rel="stylesheet" href="styles.css">
-
+<!--link rel="stylesheet" type="text/css" href="styles.css"/ -->
 </head>
 <body>
   <header>
@@ -39,21 +38,31 @@ $conn->close();
   }
 
   ?>
-<a href='login.php'>Already have an account? Login here</a>
-<a href='logout.php'>Logout</a>
+  <a href='login.php'>Already have an account? Login here</a>
+  <a href='logout.php'>Logout</a>
 <div class="container">
     <form class="f-register" action="" method="post">
         <div class="user">
             <h1>Create New User</h1>
             <label for="role"><b>Select Role</b></label>
-            <input type="text" placeholder="Enter Role Name" name="role_name" id="role_name">
-            <select id="role" name="role">
-                <option value="admin">Admin</option>
-                <option value="supervisor">Supervisor</option>
-                <option value="doctor">Doctor</option>
-                <option value="careGiver">Care Giver</option>
-                <option value="patient">Patient</option>
-                <option value="family">Family member</option>
+            <?php
+            $query = "SELECT role_name FROM roles";
+            $roles = $conn->query($query);
+            $arr = [];
+            if ($roles->num_rows > 0) {
+            // output data of each row
+            while($row = $roles->fetch_assoc()) {
+              array_push($arr, $row['role_name']);
+            }
+          }
+            ?>
+            <select id="role" name="role_name">
+              <?php
+                foreach($arr as $r) { ?>
+                  <option value="<?php $r ?>">
+                  <?php echo $r ?>
+                </option>
+              <?php } ?>
             </select><br>
             <label for="fName"><b>First Name</b></label>
             <input type="text" placeholder="Enter First Name" name="fname" id="fname" required><br>
