@@ -44,7 +44,7 @@ $conn->close();
     <form class="f-register" action="" method="post">
         <div class="user">
             <h1>Create New User</h1>
-            <label for="role"><b>Select Role</b></label>
+            <label for="role_name"><b>Select Role</b></label>
             <?php
             $query = "SELECT role_name FROM roles";
             $roles = $conn->query($query);
@@ -56,12 +56,10 @@ $conn->close();
             }
           }
             ?>
-            <select id="role" name="role_name">
+            <select id="role" name="role_name" required>
               <?php
                 foreach($arr as $r) { ?>
-                  <option value="<?php $r ?>">
-                  <?php echo $r ?>
-                </option>
+                  <option><?php echo $r; ?> </option>
               <?php } ?>
             </select><br>
             <label for="fName"><b>First Name</b></label>

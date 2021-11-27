@@ -3,12 +3,22 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   ?>
+  <?php
+  session_start();
+  if (!isset($_SESSION['access_lvl'])) {
+    header("Location: ../login.php");
+  } else {
+    if ($_SESSION['access_lvl'] !== '1') {
+      header("Location: ../login.php");
+  }
+  }
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <?php
 $servername = "localhost";
@@ -18,13 +28,22 @@ $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
 ?>
 
-
+<?php
+  if (isset($_POST['submit'])) {
+    $pay_change = $_POST['pay_change'];
+    $user_id = $_POST['user_id'];
+    $qry = "UPDATE employee SET salary='$pay_change' WHERE user_id='$user_id'";
+    $rslt = $conn->query($qry);
+    if ($rslt == TRUE) {
+      echo "Salary succesfully adjusted";
+    }
+  }?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
   </header>
-  <div class="container">
-    <h2>Employee salary updated</h2>
+  <div>
+    <h2>Salary Management</h2>
   </div>
 <div class="container">
 
@@ -36,24 +55,32 @@ $conn = new mysqli($servername, $username, $password, $db);
         <th>Role</th>
         <th>Salary</th>
       </tr>
-      <tr>
-        <td>Alfred</td>
-        <td>Gellano</td>
-        <td>Doctor</td>
-        <td><form><input type='text' placeholder="500"/></td>
-      </tr>
-      <tr>
-        <td>Alfred</td>
-        <td>Gellano</td>
-        <td>Caregiver</td>
-        <td><form><input type='text' placeholder="0"/></td>
-      </tr>
+      <?php $sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, employee.salary FROM user, employee WHERE user.user_id = employee.user_id";
+      $result = $conn->query($sql);
+      if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+          ?><tr>
+                <?php echo "<td>" . $row["fname"] . "</td>"?>
+                <?php echo "<td>" . $row["lname"] . "</td>"?>
+                <?php echo "<td>" . $row["role_name"] . "</td>"?>
+                <?php echo "<td>" . $row['salary'] . "</td>"?>
+                <td>
+                  <form action='' name='salary' method='post'>
+                    <?php echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
+                    <input type='text' name='pay_change' placeholder="<?php echo $row['salary'];?>">
+                    <input type='submit' name='submit' value='Adjust Pay'/>
+                  </form>
+              </tr>
+            <?php }
+          }?>
+
+    </table>
 
 </div>
-<footer>
-    <h3>Contact Us</h3>
-    <a href='admin/roles.php'/>roles</a>
-    <p>000-000-0000</p>
-</footer>
+
 </body>
+<script>  if ( window.history.replaceState ) {
+window.history.replaceState( null, null, window.location.href );
+}
+</script>
 </html>

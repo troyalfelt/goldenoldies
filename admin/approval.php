@@ -41,11 +41,15 @@ $conn = new mysqli($servername, $username, $password, $db);
   <?php
   if (isset($_POST['submit']))  {
         $user_id = $_POST['user_id'];
-
         if ($_POST['status'] == 'approved') {
+          $access_lvl = $_POST['access_lvl'];
           $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
           $rslt = $conn->query($qry);
-          echo 'User approved';
+          if ($access_lvl <= 3) {
+            $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
+            $rslt2 = $conn->query($qry2);
+            echo 'Employee Registered';
+          }
           } else {
             $qry = "DELETE FROM user WHERE user_id= '$user_id'";
             $rslt = $conn->query($qry);
@@ -59,7 +63,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 ?>
 <?php
 
-    $sql = "SELECT user_id, fname, lname, role_name FROM user WHERE approved = 0 ";
+    $sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, roles.access_lvl FROM user, roles WHERE approved = 0 AND user.role_name = roles.role_name";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -72,6 +76,7 @@ $conn = new mysqli($servername, $username, $password, $db);
             <td>
               <form action='' method='post' name='approved'>
                 <?php echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
+                <?php echo"<input type='hidden' name='access_lvl' value=" . $row['access_lvl'] . ">";?>
                 <input type='hidden' name='status' value='approved'>
                 <input type='submit' name='submit' value='Approve'>
                 </form>

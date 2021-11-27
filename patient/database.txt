@@ -9,7 +9,7 @@ employee
 user_id, salary
 
 patient
-user_id, code, contact, relations, emer_phone, group, patien_id, admit_date,
+user_id, code, contact, relations, emer_phone, group, patient_id, admit_date,
 age, total_due
 
 family
