@@ -42,14 +42,16 @@ $conn = new mysqli($servername, $username, $password, $db);
   if (isset($_POST['submit']))  {
         $user_id = $_POST['user_id'];
         if ($_POST['status'] == 'approved') {
-          $access_lvl = $_POST['access_lvl'];
-          $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
-          $rslt = $conn->query($qry);
-          if ($access_lvl <= 3) {
-            $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
-            $rslt2 = $conn->query($qry2);
-            echo 'Employee Registered';
-          }
+            $access_lvl = $_POST['access_lvl'];
+            $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
+            $rslt = $conn->query($qry);
+            if ($access_lvl <= 3) {
+              $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
+              $rslt2 = $conn->query($qry2);
+              echo 'Employee Registered';
+            } elseif { ($access_lvl == 4) {
+
+            }
           } else {
             $qry = "DELETE FROM user WHERE user_id= '$user_id'";
             $rslt = $conn->query($qry);

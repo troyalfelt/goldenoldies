@@ -25,7 +25,7 @@ $conn = new mysqli($servername, $username, $password, $db);
   $sql = "SELECT email, fname, lname, password, user.role_name, access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
   $result = mysqli_query($conn, $sql);
   if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+    while($row == $result->fetch_assoc()) {
       session_start();
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
