@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -22,17 +23,26 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php if (isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $sql = "SELECT email, fname, lname, password, user.role_name, access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
+  $sql = "SELECT user.user_id, email, fname, lname, password, user.role_name, roles.access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
   $result = mysqli_query($conn, $sql);
   if ($result->num_rows > 0) {
-    while($row == $result->fetch_assoc()) {
-      session_start();
+    while($row = $result->fetch_assoc()) {
+      $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
       $_SESSION['role_name'] = $row['role_name'];
       $_SESSION['access_lvl'] = $row['access_lvl'];
-      echo 'Welcome, ' . $_SESSION['name'] . '<br/>';
-
+    }
+    if ($_SESSION['access_lvl'] <= 2) {
+      header("Location: admin/new-roster.php");
+    } elseif ($_SESSION['access_lvl'] == 3) {
+      header("Location: doctor/home.php");
+    } elseif ($_SESSION['access_lvl'] == 4) {
+      header("Location: cargiver/home.php");
+    } elseif ($_SESSION['access_lvl'] == 5) {
+      header("Location: patient/home.php");
+    } elseif ($_SESSION['access_lvl'] == 6) {
+      header("Location: family.php");
     }
 
   } else {
@@ -40,12 +50,7 @@ $conn = new mysqli($servername, $username, $password, $db);
   }
 }
 ?>
-<?php
-  if (isset($_SESSION['access_lvl'])) {
-    echo $_SESSION['access_lvl'];
-  } else {
-    echo 'no lcuk';
-  }?>
+
 <body>
   <header>
       <h1>Golden Oldies</h1>

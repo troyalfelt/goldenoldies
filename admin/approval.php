@@ -25,7 +25,35 @@ $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
  ?>
 
-
+ <?php
+ if (isset($_POST['submit']))  {
+       $user_id = $_POST['user_id'];
+       if ($_POST['status'] == 'approved') {
+         $access_lvl = $_POST['access_lvl'];
+         $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
+         $rslt = $conn->query($qry);
+         if ($access_lvl <= 4) {
+           $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
+           $rslt2 = $conn->query($qry2);
+           echo 'Employee Registered';
+         } elseif ($access_lvl == 5) {
+           $qry2 = "INSERT INTO patient (user_id) VALUES ('$user_id')";
+           $rslt2 = $conn->query($qry2);
+         } else {
+           $qry2 = "INSERT INTO family (user_id) VALUES ('$user_id')";
+           $rslt2 = $conn->query($qry2);
+         }
+         } else {
+           $qry = "DELETE FROM user WHERE user_id= '$user_id'";
+           $rslt = $conn->query($qry);
+           if ($rslt == TRUE) {
+             echo "User deleted";
+           } else {
+               echo "Error deleting record: " . $conn->error;
+           }
+         }
+}
+?>
 <body>
   <header>
       <h1>Golden Oldies</h1>
@@ -38,31 +66,7 @@ $conn = new mysqli($servername, $username, $password, $db);
         <th>Last Name</th>
         <th>Role</th>
     </tr>
-  <?php
-  if (isset($_POST['submit']))  {
-        $user_id = $_POST['user_id'];
-        if ($_POST['status'] == 'approved') {
-            $access_lvl = $_POST['access_lvl'];
-            $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
-            $rslt = $conn->query($qry);
-            if ($access_lvl <= 3) {
-              $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
-              $rslt2 = $conn->query($qry2);
-              echo 'Employee Registered';
-            } elseif { ($access_lvl == 4) {
 
-            }
-          } else {
-            $qry = "DELETE FROM user WHERE user_id= '$user_id'";
-            $rslt = $conn->query($qry);
-            if ($rslt == TRUE) {
-              echo "User deleted";
-            } else {
-                echo "Error deleting record: " . $conn->error;
-            }
-          }
-}
-?>
 <?php
 
     $sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, roles.access_lvl FROM user, roles WHERE approved = 0 AND user.role_name = roles.role_name";
@@ -94,6 +98,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php }
   }
   ?>
+</table>
         </div>
         <footer>
         <script>  if ( window.history.replaceState ) {

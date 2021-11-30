@@ -9,8 +9,7 @@ employee
 user_id, salary
 
 patient
-user_id, group, patient_id, admit_date,
-age, total_due
+user_id, group_number, admit_date, total_due
 
 family
 user_id, patient_id
