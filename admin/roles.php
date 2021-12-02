@@ -22,7 +22,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php if (isset($_POST['submit'])) {
   $role = $_POST['role'];
   $access = $_POST['access'];
-  $sql = "INSERT INTO roles (roles, access) VALUES ('$role', '$access')";
+  $sql = "INSERT INTO roles (role_name, access_lvl) VALUES ('$role', '$access')";
 
 
   if ($conn->query($sql) === TRUE) {
@@ -38,20 +38,29 @@ $conn = new mysqli($servername, $username, $password, $db);
       <h1>Golden Oldies</h1>
   </header>
   <div class="container">
-      <table>
-        <tr>
-            <th>Role</th>
-            <th>Access Level</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+    <table>
+      <tr>
+          <th>Role Name</th>
+          <th>Access Level</th>
+
+      </tr>
+
+  <?php
+
+      $sql = "SELECT role_name, access_lvl FROM roles ORDER BY access_lvl ASC";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        ?><tr>
+              <?php echo "<td>" . $row["role_name"] . "</td>"?>
+              <?php echo "<td>" . $row["access_lvl"] . "</td>"?>
+            </tr>
+  <?php }
+    }
+    ?>
+  </table>
     <form action="" method="post" class="">
         <label for="role"><b>New Role</b></label><br>
         <input type="text" placeholder="Enter Role" name="role" id="role" required><br>
