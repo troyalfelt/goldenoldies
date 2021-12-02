@@ -15,9 +15,9 @@ error_reporting(E_ALL);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>New Roster</title>
-<link rel="stylesheet" href="../styles.css">
+  <meta charset="UTF-8">
+  <title>New Roster</title>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
 <?php
 $servername = "localhost";
@@ -48,6 +48,7 @@ if ($result == TRUE) {
 }
 ?>
 <body>
+
 <header>
     <h1>Golden Oldies</h1>
 </header>

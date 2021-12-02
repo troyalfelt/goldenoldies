@@ -1,38 +1,6 @@
 * {
     box-sizing: border-box;
-  }
-  body {
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    align-items: center;
-  }
-  header {
-    background-color: #7fffd4;
-    width: 100%;
-  }
-  a {
-    background-color: #7fffd4;
-    border-radius: 5px;
-    color: black;
-    font-size: 44pt;
-    text-decoration: none;
-  }
-  a:hover {
-    color: #C0C0C0;
-  }
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 500px;
-}
-  footer {
-    background-color: #C0C0C0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
+    }
   .container {
     background-color: #f0ffff;
     display: flex;
@@ -42,11 +10,15 @@
     height: 590px;
     width: 100%;
   }
+  .btn {
+    width: 100px;
+  }
   /*Home page*/
   .link {
     align-items: center;
     display: flex;
     flex-direction: column;
+    font-size: 50pt;
     height: 100px;
     width: 200px;
   }
@@ -68,12 +40,65 @@
     height: 550px;
     width: 700px;
   }
-  .user {
-    display: flex;
-    flex-direction: column;
-  }
   .patient {
     display: flex;
     flex-direction: column;
     align-self: center;
+  }
+  .user {
+    display: flex;
+    flex-direction: column;
+  }
+  /*New Roster page*/
+  .newR {
+    background-color: #7fffd4;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 500px;
+    width: 400px;
+  }
+  .roleSelect {
+    text-align: center;
+    width: 150px;
+  }
+  .roster {
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+  
+  }
+  /*General Styles*/
+  body {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    align-items: center;
+  }
+  header {
+    background-color: #7fffd4;
+    width: 100%;
+  }
+  a {
+    background-color: #7fffd4;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #C0C0C0;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 500px;
+  }
+  footer {
+    background-color: #C0C0C0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
