@@ -25,7 +25,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 
 <?php
 
-    $sql = "SELECT  date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id FROM roster WHERE date = date(now())";
+    $sql = "SELECT date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id FROM roster WHERE date = date(now())";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
