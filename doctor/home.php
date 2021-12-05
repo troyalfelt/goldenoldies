@@ -99,7 +99,7 @@ $conn = new mysqli($servername, $username, $password, $db);
         while($row = $answer->fetch_assoc()) {
           $patient_name = $row['patient_name'];
           $appt_date = $row['date'];
-          echo "<tr><td>$patient_name</td><td>$appt_date</td></tr>";
+          echo "<tr><td><a href='patient.php?id=$patient_id&appt_date=$appt_date'>$patient_name</a></td><td>$appt_date</td></tr>";
       }
       echo "</table>";
     } else {
