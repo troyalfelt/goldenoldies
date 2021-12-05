@@ -8,5 +8,3 @@ if (!isset($_SESSION['access_lvl'])) {
 }
 }
 ?>
-
-patient homepage
