@@ -11,11 +11,12 @@ if (!isset($_SESSION['access_lvl'])) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html class="h-full bg-gray-50" lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <title>Approval</title>
-  <link rel="stylesheet" href="../styles.css">
 </head>
 <?php
 $servername = "localhost";
@@ -54,19 +55,86 @@ $conn = new mysqli($servername, $username, $password, $db);
          }
 }
 ?>
-<body>
-  <header>
-      <h1>Golden Oldies</h1>
-  </header>
-  <div class="container">
-  <h2>Registration Approval</h2>
-  <table>
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Role</th>
-    </tr>
+<body class="h-full">
+<nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
+          <div class="hidden sm:block sm:ml-6">
+            <div class="flex space-x-4">
+              <a href="admin.php" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
+              <a href="appt.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Appointments</a>
+              <a href="employee.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Employees</a>
+              <a href="info.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patient Info</a>
+              <a href="new-roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">New Roster</a>
+              <a href="report.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Report</a>
+              <a href="roles.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roles</a>
+            </div>
+          </div>
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <a href="../logout.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+        </div>
+      </div>
+    </div>
+</nav>
+  
+<div class="flex flex-col">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <h1 class="text-gray-900 text-5xl">Registration Approval</h1>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                First Name
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Last Name
+              </th>
+              <th
+                scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Role
+              </th>
+              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Approval
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      Example
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">
+                  Example
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">
+                  Admin
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <label for="approve" class="text-gray-900 hover:text-indigo-900">Yes</label>
+                <input type="checkbox" name="approve" id="approve">
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <label for="disapprove" class="text-gray-900 hover:text-indigo-900">No</label>
+                <input type="checkbox" name="disapprove" id="disapprove">
+              </td>
+            </tr>
 
+            <!-- More people... -->
 <?php
 
     $sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, roles.access_lvl FROM user, roles WHERE approved = 0 AND user.role_name = roles.role_name";
@@ -98,15 +166,31 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php }
   }
   ?>
-</table>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <form class="mt-8 space-y-6" action="" method="POST">
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Submit
+          </button>
         </div>
-        <footer>
-        <script>  if ( window.history.replaceState ) {
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+<script>  if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
 }
 </script>
-            <h3>Contact Us</h3>
-            <p>000-000-0000</p>
-        </footer>
-        </body>
-        </html>
+</body>
+</html>
