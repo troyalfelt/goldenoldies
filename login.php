@@ -38,7 +38,7 @@ $conn = new mysqli($servername, $username, $password, $db);
     } elseif ($_SESSION['access_lvl'] == 3) {
       header("Location: doctor/home.php");
     } elseif ($_SESSION['access_lvl'] == 4) {
-      header("Location: cargiver/home.php");
+      header("Location: caregiver/home.php");
     } elseif ($_SESSION['access_lvl'] == 5) {
       header("Location: patient/home.php");
     } elseif ($_SESSION['access_lvl'] == 6) {
