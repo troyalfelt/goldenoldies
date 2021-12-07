@@ -75,7 +75,7 @@ echo "Error: " . $sql . "<br>" . $conn->error;
           <div>
           <label for="role_name"><b>Select Role</b></label>
             <?php
-            /*$query = "SELECT role_name FROM roles";
+            $query = "SELECT role_name FROM roles";
             $roles = $conn->query($query);
             $arr = [];
             if ($roles->num_rows > 0) {
@@ -83,7 +83,7 @@ echo "Error: " . $sql . "<br>" . $conn->error;
             while($row = $roles->fetch_assoc()) {
               array_push($arr, $row['role_name']);
             }
-          }*/
+          }
             ?>
             <select id="role" name="role_name" required>
               <?php
@@ -93,16 +93,16 @@ echo "Error: " . $sql . "<br>" . $conn->error;
             </select><br>
           </div>
           <div>
-            <label for="fName" class="sr-only">First Name</label>
+            <label for="fname" class="sr-only">First Name</label>
             <input id="fname" name="fname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter First Name" required>
           </div>
           <div>
-            <label for="lName" class="sr-only">Last Name</label>
+            <label for="lname" class="sr-only">Last Name</label>
             <input id="lname" name="lname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Last Name" required><br>
           </div>
           <div>
             <label for="dob" class="sr-only">Date of Birth</label>
-            <input id="dob" name="dob" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
+            <input id="dob" name="dob" type="date" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
           </div>
           <div>
             <label for="phone" class="sr-only">Phone Number</label>
@@ -118,9 +118,9 @@ echo "Error: " . $sql . "<br>" . $conn->error;
           </div>
         </div>
         <p>Already have an account? <a href="login.php" class="text-yellow-400 hover:bg-gray-200">Login here.</a></p>
-  
+
         <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button type="submit" name = "submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Register
           </button>
         </div>
