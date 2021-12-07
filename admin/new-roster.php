@@ -2,14 +2,13 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-//session_start();
-//if (!isset($_SESSION['access_lvl'])) {
-  //header("Location: ../login.php");
-//} else {
-  //if ($_SESSION['access_lvl'] > '2') {
-    //header("Location: ../login.php");
-//}
-//}
+session_start();
+if (!isset($_SESSION['access_lvl'])) {
+  header("Location: ../login.php");
+} elseif ($_SESSION['access_lvl'] > '2') {
+    header("Location: ../login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +82,7 @@ if ($result == TRUE) {
   <div class="max-w-md w-full space-y-8">
   <h1 class="text-gray-900 text-5xl">New Roster</h1>
     <div class="p-4 shadow-md rounded-md text-left">
-      <form action="" method="post">
+      <form class="mt-8 space-y-6" action="" method="post">
         <div>
           <label class="block mt-4">
             <span class="text-gray-700">Date</span>

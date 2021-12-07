@@ -3,7 +3,26 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   ?>
+  <?php
+  $servername = "localhost";
+  $username = "troyalfelt";
+  $password = "";
+  $db = 'test';
+  $conn = new mysqli($servername, $username, $password, $db);
+  ?>
+  <?php if (isset($_POST['submit'])) {
+    $role = $_POST['role'];
+    $access = $_POST['access'];
+    $sql = "INSERT INTO roles (role_name, access_lvl) VALUES ('$role', '$access')";
 
+
+    if ($conn->query($sql) === TRUE) {
+      echo "New record created successfully";
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+  }
+  ?>
 <!DOCTYPE html>
 <html class="h-full bg-gray-50" lang="en">
 <head>
@@ -126,48 +145,78 @@ $conn = new mysqli($servername, $username, $password, $db);
   $access = $_POST['access'];
   $sql = "INSERT INTO roles (role_name, access_lvl) VALUES ('$role', '$access')";
 
+                $sql = "SELECT role_name, access_lvl FROM roles ORDER BY access_lvl ASC";
+                $result = $conn->query($sql);
 
-  if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-}
-?>
+                if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                  ?><tr>
+                        <?php echo '<td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                              <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">' . $row['role_name'] .
+                                '</div>
+                              </div>
+                            </div>
+                          </td>'; ?>
+                          <?php echo '<td class="px-6 py-4 whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="ml-4">
+                                  <div class="text-sm font-medium text-gray-900">' . $row['access_lvl'] .
 
-<body>
-  <header>
-      <h1>Golden Oldies</h1>
-  </header>
-  <div class="container">
-    <table>
-      <tr>
-          <th>Role Name</th>
-          <th>Access Level</th>
-
-      </tr>
-
-  <?php
-
-      $sql = "SELECT role_name, access_lvl FROM roles ORDER BY access_lvl ASC";
-      $result = $conn->query($sql);
-
-      if ($result->num_rows > 0) {
-      // output data of each row
-      while($row = $result->fetch_assoc()) {
-        ?><tr>
-              <?php echo "<td>" . $row["role_name"] . "</td>"?>
-              <?php echo "<td>" . $row["access_lvl"] . "</td>"?>
-            </tr>
-  <?php }
-    }
-    ?>
-  </table>
-    <form action="" method="post" class="">
-        <label for="role"><b>New Role</b></label><br>
-        <input type="text" placeholder="Enter Role" name="role" id="role" required><br>
-        <label for="accsess"><b>Access Level</b></label><br>
-        <input type="text" placeholder="Enter Access Level" name="access" id="access" required><br>
-        <input type="submit" class="btn" name="submit" value="Okay">
-    </form>
-  </div>*/
+                                  '</div>
+                                </div>
+                              </div>
+                            </td>'; ?>
+                      </tr>
+            <?php }
+              }
+              ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          New Role
+        </h2>
+      </div>
+      <form class="mt-8 space-y-6" action="" method="POST">
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <label for="role" class="sr-only">New Role</label>
+            <input id="role" name="role" type="text" placeholder="Role Name" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+          </div>
+          <div>
+            <label for="access" class="sr-only">Access Level</label>
+            <select id="access" name="access" class="form-select mt-1 block w-full">
+              <option value=''>Select Access Level</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button name='submit' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

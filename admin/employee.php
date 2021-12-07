@@ -41,8 +41,7 @@ $conn = new mysqli($servername, $username, $password, $db);
     if ($rslt == TRUE) {
       echo "Salary succesfully adjusted";
     }
-  }
-?>
+  }?>
 <body class="h-full">
 <nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -73,17 +72,12 @@ $conn = new mysqli($servername, $username, $password, $db);
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <h1 class="text-gray-900 text-5xl">Salary Management</h1>
-        <form action="" method="post">
-            <input type="text" name="value" placeholder="Value To Search"><br><br>
-            <input type="submit" name="search" value="Search"><br><br>
-          </form>
-
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-            <!--<th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Employee ID
-              </th> -->
+              </th>
               <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 First Name
               </th>
@@ -98,11 +92,10 @@ $conn = new mysqli($servername, $username, $password, $db);
                 Salary
               </th>
             </tr>
-
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-
-            <!--<td class="px-6 py-4 whitespace-nowrap">
+            <tr>
+            <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
@@ -134,36 +127,18 @@ $conn = new mysqli($servername, $username, $password, $db);
                 <div class="text-sm text-gray-900">
                   Example
                 </div>
-              </td> -->
+              </td>
 
             <!-- More people... -->
-            <?php if(isset($_POST['search']))
-            {
-                $value = $_POST['value'];
-                // search in all table columns
-                // using concat mysql function
-                $query = "SELECT * FROM user JOIN employee WHERE user.user_id = employee.user_id AND CONCAT(fname, lname, role_name, salary) LIKE '%$value%'";
-                $search_result = $conn->query($query);
-
-
-                }
-                 else {
-                  $query = "SELECT user.user_id, user.fname, user.lname, user.role_name, employee.salary FROM user, employee WHERE user.user_id = employee.user_id";
-                    $search_result = $conn->query($query);
-
-                }
-
-                // function to connect and execute the query
-                ?>
-      <?php //$sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, employee.salary FROM user, employee WHERE user.user_id = employee.user_id";
-
-      if ($search_result !== false && $search_result->num_rows > 0) {
-        while($row = $search_result->fetch_assoc()) {
-          ?><tr>
+      <?php $sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, employee.salary FROM user, employee WHERE user.user_id = employee.user_id";
+      $result = $conn->query($sql);
+      if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+          ?>
                 <?php echo "<td>" . $row["fname"] . "</td>"?>
                 <?php echo "<td>" . $row["lname"] . "</td>"?>
                 <?php echo "<td>" . $row["role_name"] . "</td>"?>
-                <?php echo "<td>" . $row["salary"] . "</td>"?>
+                <?php echo "<td>" . $row['salary'] . "</td>"?>
 
             <?php }
           }?>
@@ -182,19 +157,19 @@ $conn = new mysqli($servername, $username, $password, $db);
         </h2>
       </div>
       <form class="mt-8 space-y-6" action="" method="POST">
-        <?php //echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
+        <?php echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="user_id" class="sr-only">Employee ID</label>
-            <input id="employee_id" name="user_id" type="text" placeholder="Employee ID" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+            <label for="empolyee_id" class="sr-only">Employee ID</label>
+            <input id="employee_id" name="emplployee_id" type="text" placeholder="Employee ID" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
           </div>
           <div>
             <label for="salary" class="sr-only">Salary</label>
-            <input id="pay_change" name="pay_change" type="text" placeholder="New Salary<?php //echo $row['salary'];?>" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+            <input id="pay_change" name="pay_change" type="text" placeholder="New Salary<?php echo $row['salary'];?>" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
           </div>
         </div>
         <div>
-          <button type="submit" name ="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Submit
           </button>
         </div>
@@ -204,7 +179,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           </button>
         </div>
       </form>
-
+    </div>
   </div>
 </body>
 <script>  if ( window.history.replaceState ) {

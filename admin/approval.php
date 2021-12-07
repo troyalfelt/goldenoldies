@@ -8,7 +8,13 @@ if (!isset($_SESSION['access_lvl'])) {
 }
 }
 ?>
-
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+ ?>
 
 <!DOCTYPE html>
 <html class="h-full bg-gray-50" lang="en">
@@ -18,13 +24,7 @@ if (!isset($_SESSION['access_lvl'])) {
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <title>Approval</title>
 </head>
-<?php
-$servername = "localhost";
-$username = "troyalfelt";
-$password = "";
-$db = 'test';
-$conn = new mysqli($servername, $username, $password, $db);
- ?>
+
 
  <?php
  if (isset($_POST['submit']))  {
@@ -79,6 +79,7 @@ $conn = new mysqli($servername, $username, $password, $db);
       </div>
     </div>
 </nav>
+<<<<<<< HEAD
 
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -134,6 +135,16 @@ $conn = new mysqli($servername, $username, $password, $db);
               </td>
             </tr>
 
+=======
+
+<div class="flex flex-col">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <h1 class="text-gray-900 text-5xl">Registration Approval</h1>
+
+
+>>>>>>> css_combine
             <!-- More people... -->
 <?php
 
@@ -141,30 +152,86 @@ $conn = new mysqli($servername, $username, $password, $db);
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-      ?><tr>
-            <?php echo "<td>" . $row["fname"] . "</td>"?>
-            <?php echo "<td>" . $row["lname"] . "</td>"?>
-            <?php echo "<td>" . $row["role_name"] . "</td>"?>
-            <td>
-              <form action='' method='post' name='approved'>
+      ?><table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              First Name
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Last Name
+            </th>
+            <th
+              scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Role
+            </th>
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Approval
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+  <?php while($row = $result->fetch_assoc()) { ?>
+    <tr>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center">
+          <div class="ml-4">
+            <div class="text-sm font-medium text-gray-900">
+              <?php echo $row["fname"]; ?>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center">
+          <div class="ml-4">
+            <div class="text-sm font-medium text-gray-900">
+              <?php echo $row["lname"]; ?>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center">
+          <div class="ml-4">
+            <div class="text-sm font-medium text-gray-900">
+              <?php echo $row["role_name"]; ?>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center">
+          <div class="ml-4">
+            <div class="text-sm font-medium text-gray-900">
+              <form action='' method='post' name='approved' class="mt-8 space-y-6">
                 <?php echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
                 <?php echo"<input type='hidden' name='access_lvl' value=" . $row['access_lvl'] . ">";?>
                 <input type='hidden' name='status' value='approved'>
-                <input type='submit' name='submit' value='Approve'>
+                <input type='submit' name='submit' value='Approve' class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 </form>
-            </td>
-            <td>
-              <form action='' method='post' name='disapproved'>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center">
+          <div class="ml-4">
+            <div class="text-sm font-medium text-gray-900">
+              <form action='' method='post' name='disapproved' class="mt-8 space-y-6">
                 <?php echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
                 <input type='hidden' name='status' value='disapproved'>
-              <input type='submit' name='submit' value='Disapprove'>
+              <input type='submit' name='submit' value='Disapprove' class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               </form>
-            </td>
+            </div>
+          </div>
+        </div>
+      </td>
           </tr>
 <?php }
-  }
+} else {
+  ?> <div class="flex items-center"><h3>All users approved</h3></div>
+<?php }
   ?>
           </tbody>
         </table>
@@ -172,6 +239,7 @@ $conn = new mysqli($servername, $username, $password, $db);
     </div>
   </div>
 </div>
+<<<<<<< HEAD
 <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <form class="mt-8 space-y-6" action="" method="POST">
@@ -188,6 +256,9 @@ $conn = new mysqli($servername, $username, $password, $db);
       </form>
     </div>
   </div>
+=======
+
+>>>>>>> css_combine
 <script>  if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
 }

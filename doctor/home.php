@@ -27,7 +27,7 @@ $conn = new mysqli($servername, $username, $password, $db);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  <title>Doctors Home</title>
+  <title><?php echo $_SESSION['name']?></title>
 </head>
 <body class="h-full">
 <nav class="bg-gray-800">
@@ -82,6 +82,7 @@ $conn = new mysqli($servername, $username, $password, $db);
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
+<<<<<<< HEAD
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
@@ -151,6 +152,126 @@ $conn = new mysqli($servername, $username, $password, $db);
             <!-- More people... -->
           </tbody>
         </table>
+=======
+            <?php
+              $today = date("Y-m-d");
+              $dr_id = $_SESSION['user_id'];
+              $query = "SELECT a.date, a.comment, u.user_id, a.patient_id, a.morn_med, a.aft_med, a.night_med, CONCAT(u.fname, ' ', u.lname) AS patient_name
+                        FROM appointment a, user u WHERE dr_id ='$dr_id' AND u.user_id=a.patient_id AND a.date < '$today'";
+              $result = $conn->query($query);
+              if ($result->num_rows > 0) {
+                echo "<tr>";
+                while($row = $result->fetch_assoc()) {
+                      $date = $row['date'];
+                      $patient_id = $row['patient_id'];
+                      $comment;
+                      $morn_med;
+                      $aft_med;
+                      $night_med;
+                      $patient_name = $row['patient_name'];
+                      echo '<td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">' . $date .
+                            '</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">' . $patient_name .
+                            '</div>
+                          </div>
+                        </div>
+                      </td>';
+                      if (!empty($row['comment'])) {
+                        $comment = $row['comment'];
+                        echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">' . $comment .
+                              '</div>
+                            </div>
+                          </div>
+                        </td>';
+                      } else {
+                        echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">N/A' .
+                              '</div>
+                            </div>
+                          </div>
+                        </td>';
+                      }
+                      if (!empty($row['morn_med'])) {
+                        $morn_med = $row['morn_med'];
+                        echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">' . $morn_med .
+                              '</div>
+                            </div>
+                          </div>
+                        </td>';
+                      } else {
+                         echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">N/A</div>
+                            </div>
+                          </div>
+                        </td>';
+                      }
+                      if (!empty($row['aft_med'])) {
+                        $aft_med = $row['aft_med'];
+                        echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">' . $aft_med .
+                              '</div>
+                            </div>
+                          </div>
+                        </td>';
+                      } else {
+                         echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">N/A
+                              </div>
+                            </div>
+                          </div>
+                        </td>';
+                      }
+                      if (!empty($row['night_med'])) {
+                        $night_med = $row['night_med'];
+                        echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">' . $night_med.
+                              '</div>
+                            </div>
+                          </div>
+                        </td>';
+                      } else {
+                         echo '<td class="px-6 py-4 whitespace-nowrap">
+                          <div class="flex items-center">
+                            <div class="ml-4">
+                              <div class="text-sm font-medium text-gray-900">N/A
+                              </div>
+                            </div>
+                          </div>
+                        </td>';
+                      }
+                      echo "</tr></tbody></table>";
+                }
+              } else {
+                echo "<h3>No past appointments</h3>";
+              }
+              ?>
+
+>>>>>>> css_combine
 
         <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-8">
@@ -163,9 +284,15 @@ $conn = new mysqli($servername, $username, $password, $db);
                             </label>
                         </div>
                         <div>
+<<<<<<< HEAD
                             <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Submit
                             </button>
+=======
+                            <input name='submit' value='Find Appointments' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+
+
+>>>>>>> css_combine
                         </div>
                     </form>
                 </div>
@@ -184,6 +311,7 @@ $conn = new mysqli($servername, $username, $password, $db);
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
+<<<<<<< HEAD
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
@@ -233,71 +361,60 @@ $conn = new mysqli($servername, $username, $password, $db);
             FROM appointment a, user u WHERE dr_id ='$dr_id' AND u.user_id=a.patient_id AND a.date < '$today'";
   $result = $conn->query($query);
   if ($result->num_rows > 0) {
+=======
+          <?php if (isset($_POST['submit'])) {
+            $date = $_POST['date'];
+            if ($date >= $today) {
+              $sql = "SELECT a.patient_id, a.date, CONCAT(u.fname, ' ', u.lname) as patient_name FROM user u, appointment a WHERE a.dr_id = '$dr_id' AND u.user_id = a.patient_id AND date <= '$date' AND date >= '$today'";
+              $answer = $conn->query($sql);
+              if ($answer->num_rows > 0) {
 
-    while($row = $result->fetch_assoc()) {
-          $date = $row['date'];
-          $patient_id = $row['patient_id'];
-          $comment;
-          $morn_med;
-          $aft_med;
-          $night_med;
-          $patient_name = $row['patient_name'];
-          echo "<tr><td>$date</td>
-                <td>$patient_name</td>";
-          if (!empty($row['comment'])) {
-            $comment = $row['comment'];
-            echo "<td>$comment</td>";
-          } else {
-            echo "<td>N/A</td>";
-          }
-          if (!empty($row['morn_med'])) {
-            $morn_med = $row['morn_med'];
-            echo "<td>$morn_med</td>";
-          } else {
-            echo "<td>N/A</td>";
-          }
-          if (!empty($row['aft_med'])) {
-            $aft_med = $row['aft_med'];
-            echo "<td>$aft_med</td>";
-          } else {
-            echo "<td>N/A</td>";
-          }
-          if (!empty($row['night_med'])) {
-            $night_med = $row['night_med'];
-            echo "<td>$night_med</td>";
-          } else {
-            echo "<td>N/A</td>";
-          }
-          echo "</tr></table>";
-    }
-  } else {
-    echo "No past appointments";
-  }
-  ?>
-  <h3>Appointments til date:</h3>
-    <form action='' name='til_date' method='post'>
-      <input type='date' name='date'>
-      <input type='submit' name='submit'>
-    </form><br/>
+                while($row = $answer->fetch_assoc()) {
+                  $patient_name = $row['patient_name'];
+                  $appt_date = $row['date'];
+                  echo "<tr><td></td><td>$appt_date</td></tr>";
+                  echo '<tr><td class="px-6 py-4 whitespace-nowrap">
+                   <div class="flex items-center">
+                     <div class="ml-4">
+                       <div class="text-sm font-medium text-gray-900">
+                       <a href="patient.php?id=$patient_id&appt_date=$appt_date">' . $patient_name . '</a>
+                       </div>
+                     </div>
+                   </div>
+                 </td>
+                 <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">' . $appt_date .
+                      '</div>
+                    </div>
+                  </div>
+                </td></tr>';
+              }
+              echo "</tbody></table>";
+            } else {
+              echo "<h3>No appointments set before $date</h3>";
+            }
 
-  <?php if (isset($_POST['submit'])) {
-    $date = $_POST['date'];
-    if ($date >= $today) {
-      $sql = "SELECT a.patient_id, a.date, CONCAT(u.fname, ' ', u.lname) as patient_name FROM user u, appointment a WHERE a.dr_id = '$dr_id' AND u.user_id = a.patient_id AND date <= '$date' AND date >= '$today'";
-      $answer = $conn->query($sql);
-      if ($answer->num_rows > 0) {
-        echo "<table><tr><th>Patient Name</th><th>Appointment Date</th></tr>";
-        while($row = $answer->fetch_assoc()) {
-          $patient_name = $row['patient_name'];
-          $appt_date = $row['date'];
-          echo "<tr><td><a href='patient.php?id=$patient_id&appt_date=$appt_date'>$patient_name</a></td><td>$appt_date</td></tr>";
-      }
-      echo "</table>";
-    } else {
-      echo "No appointments set before $date";
-    }
+            } else {
+              echo "<h3>Please select a future date</h3>";
+            }
+          }?>
+>>>>>>> css_combine
 
+
+
+<<<<<<< HEAD
     } else {
       echo "Please select a future date";
     }
   }?>*/
+=======
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+>>>>>>> css_combine

@@ -41,6 +41,7 @@ if (!isset($_SESSION['access_lvl'])) {
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <h1 class="text-gray-900 text-5xl">Patient Home</h1>
+<<<<<<< HEAD
         <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-8">
                 <div class="p-4 shadow-md rounded-md text-left">
@@ -61,6 +62,8 @@ if (!isset($_SESSION['access_lvl'])) {
                 </div>
             </div>
         </div>
+=======
+>>>>>>> css_combine
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
