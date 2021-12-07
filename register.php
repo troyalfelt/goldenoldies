@@ -41,25 +41,39 @@ echo "Error: " . $sql . "<br>" . $conn->error;
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html class="h-full bg-gray-50" lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <title>Register</title>
-<!--link rel="stylesheet" type="text/css" href="styles.css"/ -->
 </head>
-<body>
-  <header>
-      <h1>Golden Oldies</h1>
-  </header>
-
-
-  <a href='login.php'>Already have an account? Login here</a>
-  <a href='logout.php'>Logout</a>
-<div class="container">
-    <form class="f-register" action="" method="post">
-        <div class="user">
-            <h1>Create New User</h1>
-            <label for="role_name"><b>Select Role</b></label>
+<body class="h-full">
+<nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+          <div class="hidden sm:block sm:ml-6">
+            <div class="flex space-x-4">
+              <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Register for an account
+        </h2>
+      </div>
+      <div><p>For patient registration go <a href="patient_register.php" class="text-yellow-400 hover:bg-gray-200">here.</a></p></div>
+      <form class="mt-8 space-y-6" action="" method="POST">
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+          <label for="role_name"><b>Select Role</b></label>
             <?php
             $query = "SELECT role_name FROM roles";
             $roles = $conn->query($query);
@@ -77,27 +91,42 @@ echo "Error: " . $sql . "<br>" . $conn->error;
                   <option><?php echo $r; ?> </option>
               <?php } ?>
             </select><br>
-            <label for="fName"><b>First Name</b></label>
-            <input type="text" placeholder="Enter First Name" name="fname" id="fname" required><br>
-            <label for="lName"><b>Last Name</b></label>
-            <input type="text" placeholder="Enter Last Name" name="lname" id="lname" required><br>
-            <label for="email"><b>Email</b></label>
-            <input type="email" placeholder="Enter Email" name="email" id="email" required><br>
-            <label for="phone"><b>Phone Number</b></label>
-            <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required><br>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Password" name="password" id="password" required><br>
-                <label for="dob"><b>Date of Birth</b></label>
-                <input type="date" name="dob" id="dob"><br>
-                <input type="submit" class="btn" name="submit" value="Register">
-            </div>
+          </div>
+          <div>
+            <label for="fName" class="sr-only">First Name</label>
+            <input id="fname" name="fname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter First Name" required>
+          </div>
+          <div>
+            <label for="lName" class="sr-only">Last Name</label>
+            <input id="lname" name="lname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Last Name" required><br>
+          </div>
+          <div>
+            <label for="dob" class="sr-only">Date of Birth</label>
+            <input id="dob" name="dob" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
+          </div>
+          <div>
+            <label for="phone" class="sr-only">Phone Number</label>
+            <input id="phone" name="phone" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Phone Number" required><br>
+          </div>
+          <div>
+            <label for="email" class="sr-only">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+          </div>
+          <div>
+            <label for="password" class="sr-only">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+          </div>
         </div>
-    </form>
-</div>
-<footer>
-    <h3>Contact Us</h3>
-    <p>000-000-0000</p>
-</footer>
+        <p>Already have an account? <a href="login.php" class="text-yellow-400 hover:bg-gray-200">Login here.</a></p>
+
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 <script type="text/javascript">
         var e = document.getElementById('redirect'); e.action='patient_register.php'; e.submit();
 </script>
