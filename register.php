@@ -102,11 +102,7 @@ echo "Error: " . $sql . "<br>" . $conn->error;
           <div>
             <label for="lname" class="sr-only">Last Name</label>
 
-            <label for="fName" class="sr-only">First Name</label>
-            <input id="fname" name="fname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter First Name" required>
-          </div>
-          <div>
-            <label for="lName" class="sr-only">Last Name</label>
+
 
             <input id="lname" name="lname" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Last Name" required><br>
           </div>
@@ -114,9 +110,6 @@ echo "Error: " . $sql . "<br>" . $conn->error;
             <label for="dob" class="sr-only">Date of Birth</label>
 
             <input id="dob" name="dob" type="date" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
-
-            <input id="dob" name="dob" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
-
           </div>
           <div>
             <label for="phone" class="sr-only">Phone Number</label>
