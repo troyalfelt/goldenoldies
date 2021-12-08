@@ -7,6 +7,8 @@ if (!isset($_SESSION['access_lvl'])) {
     header("Location: login.php");
 }
 }
+
+//125, 23
 ?>
 
 <!DOCTYPE html>
@@ -51,22 +53,16 @@ $conn = new mysqli($servername, $username, $password, $db);
           <form action="" name='value' method="post" class="mt-8 space-y-6">
         <div style="width: 20%">
           <label for="dob" class="sr-only">Date of Birth</label>
-
-          <input id="dob" name="dob" type="date" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
+          <input id="dob" name="date" type="date" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date of Birth: mm/dd/yyyy" required>
         </div>
-
        <div style="width: 20%">
           <label for="code" class="sr-only">Family Code</label>
-
           <input id="code" name="code" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Family code" required>
         </div>
-
         <div style="width: 20%">
           <label for="patient_id" class="sr-only">Patient_id</label>
-
           <input id="patient_id" name="patient_id" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Patient ID" required>
         </div>
-
         <input type='submit' name='submit' value='Check'>
       </form>
 
@@ -75,16 +71,6 @@ $conn = new mysqli($servername, $username, $password, $db);
             <tr>
               <th scope="col" class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Patient's Name
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Doctor's Name
-              </th>
-              <th
-                scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Doctor's Appointment
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Caregiver's Name
               </th>
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Morning Medicine
@@ -113,122 +99,92 @@ $conn = new mysqli($servername, $username, $password, $db);
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
                       <?php
+                      //checks if form is submitted
                       if (isset($_POST['submit'])) {
                       $code = $_POST['code'];
-                      $patient = $_POST['patient_id'];
-                      $qry = "SELECT patient.code, user.user_id, CONCAT(user.fname, ' ', user.lname) AS full_name FROM user, patient WHERE user.role_name ='Patient' AND user.user_id = '$patient'";
+                      $patient_id = $_POST['patient_id'];
+                      $date = $_POST['date'];
+                      $today = date('Y-m-d');
+                      $patient_name;
+                      if ($date <  $today) {
+                      //checks if the codes are right
+                      $qry = "SELECT CONCAT(fname, ' ', lname) AS patient_name FROM user WHERE family_code = '$code' AND user_id = '$patient_id'";
                       $patients = $conn->query($qry);
-                      $arr = [];
                       if ($patients->num_rows == TRUE) {
-                      // output data of each row
-                      while($row = $patients->fetch_assoc()) {
-                        $patient_id = $row['user_id'];
-                        $full_name = $row['full_name'];
-                        $arr[$patient_id] = $full_name;
-                        echo $row['full_name'];
-                      }
-                    }
-                  }
-                      ?>
-                    </div>
-                  </div>
-                </div>
+                        while($row = $patients->fetch_assoc()) {
+                          $patient_name = $row['patient_name'];
+                          echo $patient_name . "</div></div></div></td>";
 
-             </td>
-              <td name = 'dr_id' class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      <?php
-                      if (isset($_POST['submit'])) {
-                        $date = $_POST['date'];
-                        $sql = "SELECT roster.dr_id, user.user_id, user.fname, user.lname FROM roster, user WHERE roster.date='$date' AND roster.dr_id = user.user_id";
+                      }
+                        $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner FROM routine WHERE patient_id='$patient_id' AND date='$date'";
                         $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                          while($row = $result->fetch_assoc()) {
-                                $dr_id = $row['dr_id'];
-                                echo $row['dr_id'];
-                              }
-                            }
+                        if ($result->num_rows >0) {
+                          echo "fuck me silly";
+                          while ($row = $result->fetch_assoc()) {
+                            $morn_status = $row['morn_status'];
+                          $aft_status = $row['aft_status'];
+                          $night_status = $row['night_status'];
+                          $breakfast = $row['breakfast'];
+                          $lunch = $row['lunch'];
+                          $dinner = $row['dinner'];
+                          if ($morn_status == 0) {
+                            echo "<td>Incomplete</td>";
+                          } elseif ($morn_status == 1) {
+                            echo "<td>Completed</td>";
+                          } else {
+                            echo "<td>None assigned</td>";
                           }
-                                ?>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
+                          if ($aft_status == 0) {
+                                echo "<td>Incomplete</td>";
+                          } elseif ($aft_status == 1) {
+
+                            echo "<td>Completed</td><";
+                          } else {
+
+                            echo "<td>None assigned</td>";
+                          }
+
+                          if ($night_status == 0) {
+                              echo "<td>Incomplete</td>";
+                          } elseif ($night_status == 1) {
+                            echo "<td>Completed</td><input type='hidden' name='night_status' value='completed'>";
+                          } else {
+                            echo "<td>None assigned</td>";
+                          }
+                          if ($breakfast == 0) {
+                              echo "<td>Incomplete</td>";
+                          } elseif ($breakfast == 1) {
+                            echo "<td>Completed</td>";
+                          }
+                          if ($lunch == 0) {
+                              echo "<td>Incomplete</td>";
+                          } elseif ($lunch == 1) {
+                            echo "<td>Completed<td>";
+                          }
+                          if ($dinner == 0) {
+                              echo "<td>Incomplete</td>";
+                          } elseif ($dinner == 1) {
+                            echo "<td>Completed</td>";
+                          }
+                        }
+                        echo "</tr></tbody></table>";
+                      } else {
+                        echo 'No schedule set for that date, please contact administrator';
+                      }
+
+
+                  } else {
+                    echo 'Incorrect patient id/family code';
+                  }
+                } else {
+                  echo 'Please choose a past date';
+                }
+              }
+                      ?>
+
+
+
+
           </tbody>
         </table-->
       </div>
