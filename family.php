@@ -230,7 +230,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               </td>
             </tr>
           </tbody>
-        </table>
+        </table-->
       </div>
     </div>
   </div>

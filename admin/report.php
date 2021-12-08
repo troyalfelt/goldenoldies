@@ -8,7 +8,18 @@ if (!isset($_SESSION['access_lvl'])) {
 }
 }
 ?>
-
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+ ?>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+  ?>
 <!DOCTYPE html>
 <html class="h-full bg-gray-50" lang="en">
 <head>
@@ -57,143 +68,107 @@ if (!isset($_SESSION['access_lvl'])) {
                             <input type="date" id="date" name="date" class="form-select mt-1 block w-full">
                             </label>
                         </div>
+                        <div>
+                          <input type='submit' name='submit' value='Check Date'>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
         <h2 class="text-gray-900 text-5xl">Missed Activity</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Patient's Name
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Doctor's Name
-              </th>
-              <th
-                scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Doctor's Appointment
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Caregiver's Name
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Morning Medicine
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Afternoon Medicine
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Night Medicine
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Breakfast
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Lunch
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Dinner
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <!-- More people... -->
-          </tbody>
-        </table>
+        <?php if (isset($_POST['submit'])) {
+          $date = $_POST['date'];
+          $today = date('Y-m-d');
+          $dr_name;
+          //checks if its happened yet
+          if ($date < $today) {
+          //checks for the doctor that day
+          $dr_check = "SELECT r.dr_id, CONCAT(u.fname, ' ', u.lname) as dr_name FROM roster r, user u WHERE r.date ='$date' AND u.user_id = r.dr_id";
+          $dr_on = $conn->query($dr_check);
+            if ($dr_on->num_rows > 0) {
+              while ($row = $dr_on->fetch_assoc()) {
+                $dr_name = $row['dr_name'];
+              }
+            } else {
+              $dr_name = 'No doctor assigned';
+            }
+          echo "<div>
+                  <div>Date: " . $date . "</div>
+                  <div>Doctor on Duty: " . $dr_name . '</div></div>';
+          $sql = "SELECT rt.patient_id, rt.morn_status, rt.aft_status, rt.night_status, rt.breakfast, rt.lunch, rt.dinner,
+          CONCAT(u.fname, ' ', u.lname) AS patient_name
+          FROM routine rt, user u WHERE rt.date='$date' AND rt.patient_id=u.user_id AND
+          (rt.morn_status = 0 OR rt.aft_status = 0 OR rt.night_status = 0 OR rt.breakfast = 0 OR rt.lunch = 0 OR rt.dinner = 0)";
+          $result=$conn->query($sql);
+          //checks if it there's a routine set for that day
+          if ($result->num_rows > 0) {
+            //makes table & head
+            echo '<table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50"><tr><th>Patient Name</th><th>Morning Med</th><th>Afternoon Med</th><th>Night Med</th>
+                      <th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr></thead><tbody>';
+            while ($row = $result->fetch_assoc()) {
+              $patient_id = $row['patient_id'];
+              $patient_name = $row['patient_name'];
+              $morn_status = $row['morn_status'];
+              $aft_status = $row['aft_status'];
+              $night_status = $row['night_status'];
+              $breakfast = $row['breakfast'];
+              $lunch = $row['lunch'];
+              $dinner = $row['dinner'];
+              echo '<tr><td>' . $patient_name . "</td>";
+              if ($morn_status == 0) {
+                echo "<td>Incomplete</td>";
+              } elseif ($morn_status == 1) {
+                echo "<td>Completed</td>";
+              } else {
+                echo "<td>None assigned</td>";
+              }
+              if ($aft_status == 0) {
+                    echo "<td>Incomplete</td>";
+              } elseif ($aft_status == 1) {
+
+                echo "<td>Completed</td><";
+              } else {
+
+                echo "<td>None assigned</td>";
+              }
+
+              if ($night_status == 0) {
+                  echo "<td>Incomplete</td>";
+              } elseif ($night_status == 1) {
+                echo "<td>Completed</td><input type='hidden' name='night_status' value='completed'>";
+              } else {
+                echo "<td>None assigned</td>";
+              }
+              if ($breakfast == 0) {
+                  echo "<td>Incomplete</td>";
+              } elseif ($breakfast == 1) {
+                echo "<td>Completed</td>";
+              }
+              if ($lunch == 0) {
+                  echo "<td>Incomplete</td>";
+              } elseif ($lunch == 1) {
+                echo "<td>Completed<td>";
+              }
+              if ($dinner == 0) {
+                  echo "<td>Incomplete</td>";
+              } elseif ($dinner == 1) {
+                echo "<td>Completed</td>";
+              }
+
+            }
+            //close table
+            echo "</tbody></table>";
+          } else {
+            //if theres no routine that day
+            echo 'no routine set for that day';
+          }
+        } else {
+          //if its a future date
+          echo '<h2>Please choose a past date</h2>';
+        }
+        }?>
       </div>
     </div>
   </div>
