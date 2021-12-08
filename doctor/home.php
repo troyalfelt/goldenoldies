@@ -1,5 +1,4 @@
 <?php
-//mildly broken
 session_start();
 if (!isset($_SESSION['access_lvl'])) {
   header("Location: ../login.php");
@@ -55,6 +54,7 @@ $conn = new mysqli($servername, $username, $password, $db);
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <h1 class="text-gray-900 text-5xl">Doctor's Home</h1>
+        <h3 class="text-gray-400 text-3xl">Past Appointments</h3>
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -67,9 +67,6 @@ $conn = new mysqli($servername, $username, $password, $db);
               <th
                 scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Comment
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Caregiver's Name
               </th>
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Morning Medicine
@@ -87,10 +84,9 @@ $conn = new mysqli($servername, $username, $password, $db);
               $today = date("Y-m-d");
               $dr_id = $_SESSION['user_id'];
               $query = "SELECT a.date, a.comment, u.user_id, a.patient_id, a.morn_med, a.aft_med, a.night_med, CONCAT(u.fname, ' ', u.lname) AS patient_name
-                        FROM appointment a, user u WHERE dr_id ='$dr_id' AND u.user_id=a.patient_id AND a.date < '$today'";
+                        FROM appointment a, user u WHERE dr_id ='$dr_id' AND u.user_id=a.patient_id AND a.date < '$today' ORDER BY a.date ASC";
               $result = $conn->query($query);
               if ($result->num_rows > 0) {
-                echo "<tr>";
                 while($row = $result->fetch_assoc()) {
                       $date = $row['date'];
                       $patient_id = $row['patient_id'];
@@ -99,7 +95,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                       $aft_med;
                       $night_med;
                       $patient_name = $row['patient_name'];
-                      echo '<td class="px-6 py-4 whitespace-nowrap">
+                      echo '<tr><td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="ml-4">
                             <div class="text-sm font-medium text-gray-900">' . $date .
@@ -194,8 +190,8 @@ $conn = new mysqli($servername, $username, $password, $db);
                           </div>
                         </td>';
                       }
-                      echo "</tr></tbody></table>";
                 }
+                echo "</tr></tbody></table>";
               } else {
                 echo "<h3>No past appointments</h3>";
               }
@@ -208,20 +204,14 @@ $conn = new mysqli($servername, $username, $password, $db);
                     <form action="" method="post">
                         <div>
                             <label class="block mt-4">
-                            <span class="text-gray-700">Appointment Date</span>
+                            <span class="text-gray-700">Appointment's Until:</span>
                             <input type="date" id="date" name="date" class="form-select mt-1 block w-full">
                             </label>
                         </div>
                         <div>
-<<<<<<< HEAD
-                            <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Submit
-                            </button>
-=======
                             <input name='submit' value='Find Appointments' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 
 
->>>>>>> css_combine
                         </div>
                     </form>
                 </div>
@@ -250,12 +240,11 @@ $conn = new mysqli($servername, $username, $password, $db);
                 while($row = $answer->fetch_assoc()) {
                   $patient_name = $row['patient_name'];
                   $appt_date = $row['date'];
-                  echo "<tr><td></td><td>$appt_date</td></tr>";
                   echo '<tr><td class="px-6 py-4 whitespace-nowrap">
                    <div class="flex items-center">
                      <div class="ml-4">
-                       <div class="text-sm font-medium text-gray-900">
-                       <a href="patient.php?id=$patient_id&appt_date=$appt_date">' . $patient_name . '</a>
+                       <div class="text-sm font-medium text-gray-900">';?>
+                       <a href="patient.php?id=<?php echo $patient_id; ?>&appt_date=<?php echo $appt_date; ?>"><?php echo $patient_name . '</a>';?>
                        </div>
                      </div>
                    </div>
@@ -263,11 +252,12 @@ $conn = new mysqli($servername, $username, $password, $db);
                  <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="ml-4">
-                      <div class="text-sm font-medium text-gray-900">' . $appt_date .
-                      '</div>
+                      <div class="text-sm font-medium text-gray-900"><?php echo $appt_date;?>
+                      </div>
                     </div>
                   </div>
-                </td></tr>';
+                </td></tr>'
+                <?php
               }
               echo "</tbody></table>";
             } else {
