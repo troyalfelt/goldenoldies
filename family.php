@@ -119,7 +119,6 @@ $conn = new mysqli($servername, $username, $password, $db);
                         $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner FROM routine WHERE patient_id='$patient_id' AND date='$date'";
                         $result = $conn->query($sql);
                         if ($result->num_rows >0) {
-                          echo "fuck me silly";
                           while ($row = $result->fetch_assoc()) {
                             $morn_status = $row['morn_status'];
                           $aft_status = $row['aft_status'];
