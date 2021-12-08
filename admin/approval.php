@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['access_lvl'])) {
   header("Location: ../login.php");
 } else {
-  if ($_SESSION['access_lvl'] > '1') {
+  if ($_SESSION['access_lvl'] !== '1') {
     header("Location: ../login.php");
 }
 }
@@ -79,63 +79,6 @@ $conn = new mysqli($servername, $username, $password, $db);
       </div>
     </div>
 </nav>
-<<<<<<< HEAD
-
-<div class="flex flex-col">
-  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <h1 class="text-gray-900 text-5xl">Registration Approval</h1>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                First Name
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Last Name
-              </th>
-              <th
-                scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
-              </th>
-              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Approval
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  Example
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  Admin
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <label for="approve" class="text-gray-900 hover:text-indigo-900">Yes</label>
-                <input type="checkbox" name="approve" id="approve">
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <label for="disapprove" class="text-gray-900 hover:text-indigo-900">No</label>
-                <input type="checkbox" name="disapprove" id="disapprove">
-              </td>
-            </tr>
-
-=======
 
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -144,7 +87,6 @@ $conn = new mysqli($servername, $username, $password, $db);
         <h1 class="text-gray-900 text-5xl">Registration Approval</h1>
 
 
->>>>>>> css_combine
             <!-- More people... -->
 <?php
 
@@ -239,26 +181,7 @@ $conn = new mysqli($servername, $username, $password, $db);
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-      <form class="mt-8 space-y-6" action="" method="POST">
-        <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Submit
-          </button>
-        </div>
-        <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-=======
 
->>>>>>> css_combine
 <script>  if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
 }
