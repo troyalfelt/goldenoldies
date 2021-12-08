@@ -41,7 +41,33 @@ if (!isset($_SESSION['access_lvl'])) {
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <h1 class="text-gray-900 text-5xl">Family Home</h1>
-        <table class="min-w-full divide-y divide-gray-200">
+        <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-md w-full space-y-8">
+                <div class="p-4 shadow-md rounded-md text-left">
+                    <form action="family.php/?id=" method="post">
+                      <div>
+                        <label class="block mt-4">
+                        <span class="text-gray-700">Patien ID</span>
+                        <input type="text" id="code" name="id" class="form-select mt-1 block w-full">
+                        </label>
+                      </div>
+                        <div>
+                            <label class="block mt-4">
+                            <span class="text-gray-700">Family Code</span>
+                            <input type="text" id="code" name="code" class="form-select mt-1 block w-full">
+                            </label>
+                        </div>
+
+                        <div>
+                            <input name='submit' value='View Patient Info' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class=" px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -171,7 +197,7 @@ if (!isset($_SESSION['access_lvl'])) {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table-->
       </div>
     </div>
   </div>
