@@ -11,6 +11,3 @@ error_reporting(E_ALL);
   $_SESSION['access_lvl'] = '';
   header("Location: login.php");
   ?>
-
-
-<h1>ello</h1>

@@ -1,4 +1,5 @@
 <?php
+//decently broken
 session_start();
 if (!isset($_SESSION['access_lvl'])) {
   header("Location: ../login.php");

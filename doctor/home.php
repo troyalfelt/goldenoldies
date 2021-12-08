@@ -1,4 +1,5 @@
 <?php
+//mildly broken
 session_start();
 if (!isset($_SESSION['access_lvl'])) {
   header("Location: ../login.php");
@@ -82,77 +83,6 @@ $conn = new mysqli($servername, $username, $password, $db);
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-<<<<<<< HEAD
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      <a href="patient.php">Patient
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <!-- More people... -->
-          </tbody>
-        </table>
-=======
             <?php
               $today = date("Y-m-d");
               $dr_id = $_SESSION['user_id'];
@@ -271,7 +201,6 @@ $conn = new mysqli($servername, $username, $password, $db);
               }
               ?>
 
->>>>>>> css_combine
 
         <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-8">
@@ -311,57 +240,6 @@ $conn = new mysqli($servername, $username, $password, $db);
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-<<<<<<< HEAD
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <!-- More people... -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-</html>
-<!--Add any code below to the HTML above-->
-
- <!-- <title><?php //echo $_SESSION['name']?>'s Home</title>
-<h1>Past Appointments</h1>
-<table>
-  <tr>
-        <th>Date</th>
-        <th>Patient Name</th>
-        <th>Morning Medicine</th>
-        <th>Afternoon Medicine</th>
-        <th>Night Medicine</th>
-        <th>Comment</th>
-      </tr>
-<?php
-  /*$today = date("Y-m-d");
-  $dr_id = $_SESSION['user_id'];
-  $query = "SELECT a.date, a.comment, u.user_id, a.patient_id, a.morn_med, a.aft_med, a.night_med, CONCAT(u.fname, ' ', u.lname) AS patient_name
-            FROM appointment a, user u WHERE dr_id ='$dr_id' AND u.user_id=a.patient_id AND a.date < '$today'";
-  $result = $conn->query($query);
-  if ($result->num_rows > 0) {
-=======
           <?php if (isset($_POST['submit'])) {
             $date = $_POST['date'];
             if ($date >= $today) {
@@ -400,16 +278,9 @@ $conn = new mysqli($servername, $username, $password, $db);
               echo "<h3>Please select a future date</h3>";
             }
           }?>
->>>>>>> css_combine
 
 
 
-<<<<<<< HEAD
-    } else {
-      echo "Please select a future date";
-    }
-  }?>*/
-=======
 
       </div>
     </div>
@@ -417,4 +288,3 @@ $conn = new mysqli($servername, $username, $password, $db);
 </div>
 </body>
 </html>
->>>>>>> css_combine

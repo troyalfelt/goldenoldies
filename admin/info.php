@@ -109,7 +109,6 @@ $conn = new mysqli($servername, $username, $password, $db);
       <th>Last Name</th>
       <th>Group</th>
       <th>Date Admitted</th>
-
 <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
@@ -117,10 +116,8 @@ $conn = new mysqli($servername, $username, $password, $db);
           Additional Patient Information
         </h2>
         <?php
-
           $sql = "SELECT user.user_id, user.fname, user.lname FROM user, patient WHERE user.user_id = patient.user_id AND approved = 1 AND user.role_name='Patient' AND patient.group_number IS NULL";
           $result = $conn->query($sql);
-
           if ($result->num_rows > 0) {
             echo '<div class="rounded-md shadow-sm -space-y-px">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -160,13 +157,9 @@ $conn = new mysqli($servername, $username, $password, $db);
           echo "<h2>All Patient Info Up To Date</h2>";
         }
         ?>
-
-
         </div>
     </div>
 </div>
 </div>
 </body>
 </html>
-
-<!--Add any of the code below into the HTML above-->
