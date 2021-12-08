@@ -86,7 +86,7 @@ if ($result == TRUE) {
         <div>
           <label class="block mt-4">
             <span class="text-gray-700">Date</span>
-            <input type="date" id="date" name="date" class="form-select mt-1 block w-full">
+            <input type="date" id="date" name="date" class="form-select mt-1 block w-full" required>
           </label>
         </div>
         <div>

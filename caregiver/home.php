@@ -21,13 +21,35 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   ?>
-  <header>
-    <title>Caregiver Home</title>
-    <link rel="stylesheet" href="../styles.css">
-  </header>
-  <body>
+  <!DOCTYPE html>
+  <html class="h-full bg-gray-50" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title><?php echo $_SESSION['name'];?>'s Home</title>
+  </head>
+  <body class="h-full">
+  <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between h-16">
+          <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+          <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
+            <div class="hidden sm:block sm:ml-6">
+              <div class="flex space-x-4">
+                <a href="info.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patient Info</a>
+              </div>
+            </div>
+          </div>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <a href="../logout.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+          </div>
+        </div>
+      </div>
+  </nav>
   <h2>Welcome</h2>
   <?php
+
   $today = date('Y-m-d');
   if (isset($_POST['insert'])) {
     $patient_id = $_POST['patient_id'];
@@ -165,8 +187,9 @@ error_reporting(E_ALL);
       WHERE group_number = '$group_num' AND p.user_id = u.user_id";
       $answer = $conn->query($query);
       if ($answer->num_rows > 0) {
-        echo '<table><tr><th>Patient Name</th><th>Morning Med</th><th>Afternoon Med</th><th>Night Med</th>
-              <th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>';
+        echo '<table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50"><tr><th>Patient Name</th><th>Morning Med</th><th>Afternoon Med</th><th>Night Med</th>
+              <th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr></thead><tbody>';
         while($row = $answer->fetch_assoc()) {
           $patient_name = $row['patient_name'];
           $patient_id = $row['user_id'];
@@ -257,9 +280,9 @@ error_reporting(E_ALL);
                 } else {
                   echo "<input type='hidden' name='night_status' value='unassigned'><td>None assigned</td>";
                 }
-                echo "<td>Breakfast<input type='checkbox' name='breakfast'></td>
-                      <td>Lunch<input type='checkbox' name='lunch'></td>
-                      <td>Dinner<input type='checkbox' name='dinner'></td>
+                echo "<td><input type='checkbox' name='breakfast'></td>
+                      <td><input type='checkbox' name='lunch'></td>
+                      <td><input type='checkbox' name='dinner'></td>
                       <td><input type='submit' name='insert' value='Submit'></td></tr></form>";
 
               }
@@ -270,7 +293,7 @@ error_reporting(E_ALL);
         }
       }
     }
-    echo "</table>";
+    echo "</tbody></table>";
     }
 
     $sql = "SELECT caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id FROM roster WHERE date = '$today'";
