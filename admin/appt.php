@@ -120,9 +120,21 @@ $conn = new mysqli($servername, $username, $password, $db);
               $query2 = "INSERT INTO appointment (date, dr_id, patient_id) VALUES('$date', '$dr_id', '$patient_id')";
               $result2 = $conn->query($query2);
               if ($result2 == TRUE) {
-                echo '<h3>New appointment created for  . $date </h3>';
+                echo '<h3>New appointment created for ' . $date '</h3>';
               } else {
                 echo "Error: " . $query2 . "<br>" . $conn->error;
+              }
+              //enter appointment into patient routine
+              $routine = "SELECT patient_id, date FROM routine WHERE patient_id = '$patient_id' AND date='$date'";
+              $result = $conn->query($routine);
+              if ($result->num_rows > 0) {
+                //adjust the db
+                $adjust = "UPDATE routine SET dr_appt = 0 WHERE patient_id = '$patient_id' AND date='$date'";
+                $adjusted = $conn->query($routine);
+              } else {
+                $create = "INSERT INTO routine (patient_id, date, dr_appt)
+                          VALUES ('$patient_id', '$date', 0)";
+                $created = $conn->query($create);
               }
             }
             ?>

@@ -357,6 +357,8 @@ if (isset($_POST['submit'])) {
   $result2 = $conn->query($sql2);
   if ($result2 == TRUE) {
     echo 'Appointment succesfully completed';
+    $complete = "UPDATE routine SET dr_appt = 1 WHERE patient_id='$patient_id' AND date='$today'";
+    $completed = $conn->query($complete);
   } else {
     echo "error " . $conn->error;
   }

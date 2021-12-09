@@ -90,6 +90,9 @@ $conn = new mysqli($servername, $username, $password, $db);
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Dinner
               </th>
+              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Doctor's Appointment
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -165,6 +168,25 @@ $conn = new mysqli($servername, $username, $password, $db);
                           } elseif ($dinner == 1) {
                             echo "<td>Completed</td>";
                           }
+                          $check_dr = "SELECT CONCAT(u.fname, ' ', u.lname) AS dr_name FROM appointment a, user u WHERE a.date = '$date'
+                                      AND u.user_id = a.dr_id AND a.patient_id = '$patient_id'";
+                          $get_name = $conn->query($check_dr);
+                          $dr_name;
+                          if ($get_name->num_rows > 0) {
+                            while ($row = $get_name->fetch_assoc()) {
+                              $dr_name = $row['dr_name'];
+                            }
+                          } else {
+                            $dr_name = "administrator about schedule";
+                          }
+                          if ($dr_appt == 0) {
+                              echo "<td>Incomplete, see " . $dr_name . "</td>";
+                          } elseif ($dr_appt == 1) {
+                            echo "<td>Completed</td>";
+                          } else {
+                            echo "<td>None assigned</td>";
+                          }
+                        }
                         }
                         echo "</tr></tbody></table>";
                       } else {
@@ -178,7 +200,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                 } else {
                   echo 'Please choose a past date';
                 }
-              }
+
                       ?>
 
 

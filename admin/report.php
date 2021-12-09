@@ -96,17 +96,17 @@ error_reporting(E_ALL);
           echo "<div>
                   <div>Date: " . $date . "</div>
                   <div>Doctor on Duty: " . $dr_name . '</div></div>';
-          $sql = "SELECT rt.patient_id, rt.morn_status, rt.aft_status, rt.night_status, rt.breakfast, rt.lunch, rt.dinner,
+          $sql = "SELECT rt.patient_id, rt.morn_status, rt.aft_status, rt.night_status, rt.breakfast, rt.lunch, rt.dinner, rt.dr_appt,
           CONCAT(u.fname, ' ', u.lname) AS patient_name
           FROM routine rt, user u WHERE rt.date='$date' AND rt.patient_id=u.user_id AND
-          (rt.morn_status = 0 OR rt.aft_status = 0 OR rt.night_status = 0 OR rt.breakfast = 0 OR rt.lunch = 0 OR rt.dinner = 0)";
+          (rt.morn_status = 0 OR rt.aft_status = 0 OR rt.night_status = 0 OR rt.breakfast = 0 OR rt.lunch = 0 OR rt.dinner = 0 or rt.dr_appt = 0)";
           $result=$conn->query($sql);
           //checks if it there's a routine set for that day
           if ($result->num_rows > 0) {
             //makes table & head
             echo '<table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50"><tr><th>Patient Name</th><th>Morning Med</th><th>Afternoon Med</th><th>Night Med</th>
-                      <th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr></thead><tbody>';
+                      <th>Breakfast</th><th>Lunch</th><th>Dinner</th><th>Doctor Appointment</tr></thead><tbody>';
             while ($row = $result->fetch_assoc()) {
               $patient_id = $row['patient_id'];
               $patient_name = $row['patient_name'];
@@ -116,6 +116,7 @@ error_reporting(E_ALL);
               $breakfast = $row['breakfast'];
               $lunch = $row['lunch'];
               $dinner = $row['dinner'];
+              $dr_appt = $row['dr_appt'];
               echo '<tr><td>' . $patient_name . "</td>";
               if ($morn_status == 0) {
                 echo "<td>Incomplete</td>";
@@ -137,7 +138,7 @@ error_reporting(E_ALL);
               if ($night_status == 0) {
                   echo "<td>Incomplete</td>";
               } elseif ($night_status == 1) {
-                echo "<td>Completed</td><input type='hidden' name='night_status' value='completed'>";
+                echo "<td>Completed</td>";
               } else {
                 echo "<td>None assigned</td>";
               }
@@ -156,7 +157,13 @@ error_reporting(E_ALL);
               } elseif ($dinner == 1) {
                 echo "<td>Completed</td>";
               }
-
+              if ($dr_appt == 0) {
+                  echo "<td>Incomplete</td>";
+              } elseif ($dr_appt == 1) {
+                echo "<td>Completed</td>";
+              } else {
+                echo "<td>None assigned</td>";
+              }
             }
             //close table
             echo "</tbody></table>";
