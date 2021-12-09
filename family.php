@@ -185,7 +185,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 
 
           </tbody>
-        </table-->
+        </table>
       </div>
     </div>
   </div>
