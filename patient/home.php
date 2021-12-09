@@ -81,14 +81,17 @@ $conn = new mysqli($servername, $username, $password, $db);
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Dinner
               </th>
+              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Appointment
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr>
-          <?php if (isset($_POST['submit'])) {
+          <?php if (!empty($_POST['submit'])) {
             $patient_id = $_SESSION['user_id'];
             $date = $_POST['date'];
-            $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner FROM routine WHERE date = '$date' AND patient_id='$patient_id'";
+            $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner, dr_appt FROM routine WHERE date = '$date' AND patient_id='$patient_id'";
             $result = $conn->query($sql);
             //checks if a routing is set for that day
             if ($result->num_rows > 0) {
@@ -99,6 +102,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                   $breakfast = $row['breakfast'];
                   $lunch = $row['lunch'];
                   $dinner = $row['dinner'];
+                  $dr_appt = $row['dr_appt'];
                   if ($morn_status == 0) {
                     echo "<td>Incomplete</td>";
                   } elseif ($morn_status == 1) {
@@ -115,7 +119,6 @@ $conn = new mysqli($servername, $username, $password, $db);
 
                     echo "<td>None assigned</td>";
                   }
-
                   if ($night_status == 0) {
                       echo "<td>Incomplete</td>";
                   } elseif ($night_status == 1) {
@@ -138,6 +141,25 @@ $conn = new mysqli($servername, $username, $password, $db);
                   } elseif ($dinner == 1) {
                     echo "<td>Completed</td>";
                   }
+
+                  $check_dr = "SELECT CONCAT(u.fname, ' ', u.lname) AS dr_name FROM appointment a, user u WHERE a.date = '$date'
+                              AND u.user_id = a.dr_id AND a.patient_id = '$patient_id'";
+                  $get_name = $conn->query($check_dr);
+                  $dr_name;
+                  if ($get_name->num_rows > 0) {
+                    while ($row = $get_name->fetch_assoc()) {
+                      $dr_name = $row['dr_name'];
+                    }
+                  } else {
+                    $dr_name = "administrator about schedule";
+                  }
+                  if ($dr_appt == 0) {
+                      echo "<td>Incomplete, see " . $dr_name . "</td>";
+                  } elseif ($dr_appt == 1) {
+                    echo "<td>Completed</td>";
+                  } else {
+                    echo "<td>None assigned</td>";
+                  }
                 }
                 echo "</tr></tbody></table>";
               } else {
@@ -147,17 +169,19 @@ $conn = new mysqli($servername, $username, $password, $db);
               //this is where today's table goes
               $patient_id = $_SESSION['user_id'];
               $date = date('Y-m-d');
-              $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner FROM routine WHERE date = '$date' AND patient_id='$patient_id'";
+              $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner, dr_appt FROM routine WHERE date = '$date' AND patient_id='$patient_id'";
               $result = $conn->query($sql);
               //checks if a routing is set for that day
               if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $morn_status = $row['morn_status'];
+                    echo $morn_status;
                     $aft_status = $row['aft_status'];
                     $night_status = $row['night_status'];
                     $breakfast = $row['breakfast'];
                     $lunch = $row['lunch'];
                     $dinner = $row['dinner'];
+                    $dr_appt = $row['dr_appt'];
                     if ($morn_status == 0) {
                       echo "<td>Incomplete</td>";
                     } elseif ($morn_status == 1) {
@@ -196,6 +220,24 @@ $conn = new mysqli($servername, $username, $password, $db);
                         echo "<td>Incomplete</td>";
                     } elseif ($dinner == 1) {
                       echo "<td>Completed</td>";
+                    }
+                    $check_dr = "SELECT CONCAT(u.fname, ' ', u.lname) AS dr_name FROM appointment a, user u WHERE a.date = '$date'
+                                AND u.user_id = a.dr_id AND a.patient_id = '$patient_id'";
+                    $get_name = $conn->query($check_dr);
+                    $dr_name;
+                    if ($get_name->num_rows > 0) {
+                      while ($row = $get_name->fetch_assoc()) {
+                        $dr_name = $row['dr_name'];
+                      }
+                    } else {
+                      $dr_name = "administrator about schedule";
+                    }
+                    if ($dr_appt == 0) {
+                        echo "<td>Incomplete, see " . $dr_name . "</td>";
+                    } elseif ($dr_appt == 1) {
+                      echo "<td>Completed</td>";
+                    } else {
+                      echo "<td>None assigned</td>";
                     }
                   }
                   echo "</tr></tbody></table>";
