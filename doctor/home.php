@@ -240,6 +240,8 @@ $conn = new mysqli($servername, $username, $password, $db);
                 while($row = $answer->fetch_assoc()) {
                   $patient_name = $row['patient_name'];
                   $appt_date = $row['date'];
+                  $patient_id = $row['patient_id'];
+                  $appt_date = $row['date'];
                   echo '<tr><td class="px-6 py-4 whitespace-nowrap">
                    <div class="flex items-center">
                      <div class="ml-4">
@@ -256,7 +258,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                       </div>
                     </div>
                   </div>
-                </td></tr>'
+                </td></tr>
                 <?php
               }
               echo "</tbody></table>";
