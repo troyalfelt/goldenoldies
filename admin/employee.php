@@ -81,9 +81,9 @@ $conn = new mysqli($servername, $username, $password, $db);
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-            <!--<th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Employee ID
-              </th> -->
+              </th>
               <th scope="col" class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 First Name
               </th>
@@ -102,39 +102,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
 
-            <!--<td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      Example
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  Example
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  Admin
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  Example
-                </div>
-              </td> -->
+
 
             <!-- More people... -->
             <?php if(isset($_POST['search']))
@@ -160,6 +128,7 @@ $conn = new mysqli($servername, $username, $password, $db);
       if ($search_result !== false && $search_result->num_rows > 0) {
         while($row = $search_result->fetch_assoc()) {
           ?><tr>
+                <?php echo "<td>" . $row["user_id"] . "</td>"?>
                 <?php echo "<td>" . $row["fname"] . "</td>"?>
                 <?php echo "<td>" . $row["lname"] . "</td>"?>
                 <?php echo "<td>" . $row["role_name"] . "</td>"?>
