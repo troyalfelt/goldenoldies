@@ -8,6 +8,13 @@
   }
 }
 ?>
+<?php
+$servername = "localhost";
+$username = "troyalfelt";
+$password = "";
+$db = 'test';
+$conn = new mysqli($servername, $username, $password, $db);
+ ?>
 <!DOCTYPE html>
 <html class="h-full bg-gray-50" lang="en">
 <head>
@@ -47,37 +54,74 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Payment
         </h2>
-        <form class="mt-8 space-y-6" action="" method="POST">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="patient_id" class="sr-only">Patient ID</label>
-                    <input id="patient_id" name="patient_id" type="text" placeholder="Patient ID" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
-                </div>
-                <div>
-                    <label for="total" class="sr-only">Total Due</label>
-                    <input id="total" name="total" type="text" placeholder="Total Due" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required><br>
-                </div>
-                <div>
-                    <label for="new_payment" class="sr-only">New Payment</label>
-                    <input id="new_payment" name="new_payment" type="text" placeholder="New Payment" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
-                </div>
-            </div>
-            <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Submit
-                </button>
-            </div>
-            <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Update
-                </button>
-            </div>
-            <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Cancel
-                </button>
-            </div>
+        <form action='' method='POST'>
+          <label for='patient_id'>Patient ID</label>
+          <input type='text' name='patient_id'>
+          <input type='submit' name='submit'>
         </form>
+        <?php if (isset($_POST['submit'])) {
+          $patient_id = $_POST['patient_id'];
+
+          //check if there's a patient with that id
+          $sql = "SELECT CONCAT(fname, ' ', lname) AS patient_name FROM user WHERE user_id='$patient_id' AND role_name = 'Patient' AND approved=1";
+          $result = $conn->query($sql);
+          if ($result->num_rows > 0) {
+            $total_owed = 0;
+            $patient_name;
+            while($row = $result->fetch_assoc()) {
+              $patient_name = $row['patient_name'];
+            }
+            //get the admit date
+
+            $sql = "SELECT total_paid, TIMESTAMPDIFF(day, admit_date, CURDATE()) AS time_stayed FROM patient WHERE user_id='$patient_id'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                //calculate amount from days spent
+                $total_owed += (10 * $row['time_stayed']) - $row['total_paid'];
+                //subtract payments already made
+              }
+            } else {
+              //if there is no admit date set
+              echo 'no admit date set';
+            }
+              //get the amount from doctor's Appointments
+            $sql = "SELECT COUNT(dr_appt) AS appt_count FROM routine WHERE dr_appt = 1 AND patient_id='$patient_id'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                //calculate amount from days spent
+                $total_owed += 50 * $row['appt_count'];
+              }
+          }
+          //get amount from medicines
+
+
+            //echo the amount owed
+            echo "Total owed: " . $total_owed;
+            echo '<form action="" method="POST">
+                  <label for="total_paid">Amount Paid</label>
+                  <input type="text" name="total_paid">
+                  <input type="hidden" name="patient_id" value=' . $patient_id . '><input type="submit" name="pay" value="make payment">
+
+                  </form>';
+          } else {
+            //if theres no patient result
+            echo 'No such patient';
+          }
+        } elseif ($_POST['pay']) {
+          //if second form is submitted to make payment
+          $patient_id = $_POST['patient_id'];
+          $total_paid = $_POST['total_paid'];
+          $sql = "UPDATE patient SET total_paid = total_paid + '$total_paid' WHERE user_id = '$patient_id'";
+          $result = $conn->query($sql);
+          if ($result == TRUE) {
+            echo "Payment made succesfully";
+        } else {
+          echo 'wang dand doodle';
+        }
+      }
+        ?>
         </div>
     </div>
 </div>
