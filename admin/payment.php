@@ -95,10 +95,17 @@ $conn = new mysqli($servername, $username, $password, $db);
               }
           }
           //get amount from medicines
-
-
+          $sql = "SELECT COUNT(morn_status) AS morn_count, COUNT(aft_status) AS aft_count, COUNT(night_status) AS night_count WHERE
+                  user_id='$patient_id' AND (morn_status = 1 OR aft_status = 1 OR night_status = 1)";
+                  $result = $conn->query($sql);
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                      //calculate amount from days spent
+                      $total_owed += ($row['morn_count'] * .16) + ($row['aft_count'] * .16) + ($row['night_count'] * .16);
+                    }
+                }
             //echo the amount owed
-            echo "Total owed: " . $total_owed;
+            echo "Total owed: $" . $total_owed;
             echo '<form action="" method="POST">
                   <label for="total_paid">Amount Paid</label>
                   <input type="text" name="total_paid">
@@ -118,7 +125,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           if ($result == TRUE) {
             echo "Payment made succesfully";
         } else {
-          echo 'wang dand doodle';
+          echo 'Error';
         }
       }
         ?>

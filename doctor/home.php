@@ -95,14 +95,15 @@ $conn = new mysqli($servername, $username, $password, $db);
                       $aft_med;
                       $night_med;
                       $patient_name = $row['patient_name'];
-                      echo '<tr><td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                          <div class="ml-4">
-                            <div class="text-sm font-medium text-gray-900">' . $date .
-                            '</div>
-                          </div>
-                        </div>
-                      </td>
+                      echo '<tr>
+                              <td class="px-6 py-4 whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="ml-4">
+                                  <div class="text-sm font-medium text-gray-900">' . $date .
+                                  '</div>
+                                </div>
+                              </div>
+                              </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="ml-4">
@@ -193,7 +194,8 @@ $conn = new mysqli($servername, $username, $password, $db);
                 }
                 echo "</tr></tbody></table>";
               } else {
-                echo "<h3>No past appointments</h3>";
+                echo "<tr><td><h2 class='mt-6 text-center text-2xl font-bold text-gray-900'>No past appointments</h2>'</td></tr>";
+                echo "</tr></tbody></table>";
               }
               ?>
 
@@ -206,18 +208,14 @@ $conn = new mysqli($servername, $username, $password, $db);
                             <label class="block mt-4">
                             <span class="text-gray-700">Appointment's Until:</span>
                             <input type="date" id="date" name="date" class="form-select mt-1 block w-full">
+                            <input type='submit' name='submit'>
                             </label>
                         </div>
-                        <div>
-                            <input name='submit' value='Find Appointments' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-
-
-                        </div>
-                    </form>
-                </div>
+                      </form>
             </div>
         </div>
-        <h2 class="text-gray-900 text-5xl">Appointments</h2>
+      </div>
+        <h2 class="text-gray-900 text-5xl">Appointments</h2><br>
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
@@ -243,9 +241,9 @@ $conn = new mysqli($servername, $username, $password, $db);
                   $patient_id = $row['patient_id'];
                   $appt_date = $row['date'];
                   echo '<tr><td class="px-6 py-4 whitespace-nowrap">
-                   <div class="flex items-center">
-                     <div class="ml-4">
-                       <div class="text-sm font-medium text-gray-900">';?>
+                   <div class="items-center">
+                     <div class="items-center">
+                       <div class="text-sm font-medium text-gray-900 flex items-center">';?>
                        <a href="patient.php?id=<?php echo $patient_id; ?>&appt_date=<?php echo $appt_date; ?>"><?php echo $patient_name . '</a>';?>
                        </div>
                      </div>
@@ -258,7 +256,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                       </div>
                     </div>
                   </div>
-                </td></tr>
+                </td></tr>'
                 <?php
               }
               echo "</tbody></table>";

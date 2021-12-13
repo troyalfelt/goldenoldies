@@ -25,7 +25,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 <?php if (isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $sql = "SELECT user.user_id, email, fname, lname, password, user.role_name, roles.access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
+  $sql = "SELECT user.user_id, email, fname, lname, password, family_code, user.role_name, roles.access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
   $result = mysqli_query($conn, $sql);
   if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -34,6 +34,7 @@ $conn = new mysqli($servername, $username, $password, $db);
       $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
       $_SESSION['role_name'] = $row['role_name'];
       $_SESSION['access_lvl'] = $row['access_lvl'];
+      $_SESSION['fcode'] = $row['familly_code'];
     }
     if ($_SESSION['access_lvl'] <= 2) {
       header("Location: admin/new-roster.php");
@@ -42,7 +43,12 @@ $conn = new mysqli($servername, $username, $password, $db);
     } elseif ($_SESSION['access_lvl'] == 4) {
       header("Location: caregiver/home.php");
     } elseif ($_SESSION['access_lvl'] == 5) {
+      if ($_SESSION['family_code'] == TRUE) {
       header("Location: patient/home.php");
+    } else {
+      $_SESSION['temp_id'] = $_SESSION['user_id'];
+      header("Location: patient_register.php");
+    }
     } elseif ($_SESSION['access_lvl'] == 6) {
       header("Location: family.php");
     }

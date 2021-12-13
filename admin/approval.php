@@ -26,35 +26,6 @@ $conn = new mysqli($servername, $username, $password, $db);
 </head>
 
 
- <?php
- if (isset($_POST['submit']))  {
-       $user_id = $_POST['user_id'];
-       if ($_POST['status'] == 'approved') {
-         $access_lvl = $_POST['access_lvl'];
-         $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
-         $rslt = $conn->query($qry);
-         if ($access_lvl <= 4) {
-           $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
-           $rslt2 = $conn->query($qry2);
-           echo 'Employee Registered';
-         } elseif ($access_lvl == 5) {
-           $qry2 = "INSERT INTO patient (user_id) VALUES ('$user_id')";
-           $rslt2 = $conn->query($qry2);
-         } else {
-           $qry2 = "INSERT INTO family (user_id) VALUES ('$user_id')";
-           $rslt2 = $conn->query($qry2);
-         }
-         } else {
-           $qry = "DELETE FROM user WHERE user_id= '$user_id'";
-           $rslt = $conn->query($qry);
-           if ($rslt == TRUE) {
-             echo "User deleted";
-           } else {
-               echo "Error deleting record: " . $conn->error;
-           }
-         }
-}
-?>
 <body class="h-full">
 <nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -85,6 +56,37 @@ $conn = new mysqli($servername, $username, $password, $db);
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <h1 class="text-gray-900 text-5xl">Registration Approval</h1>
+         <?php
+         if (isset($_POST['submit']))  {
+               $user_id = $_POST['user_id'];
+               if ($_POST['status'] == 'approved') {
+                 $access_lvl = $_POST['access_lvl'];
+                 $qry = "UPDATE user SET approved = 1 WHERE user_id= '$user_id'";
+                 $rslt = $conn->query($qry);
+                 if ($access_lvl <= 4) {
+                   $qry2 = "INSERT INTO employee (user_id) VALUES ('$user_id')";
+                   $rslt2 = $conn->query($qry2);
+                   echo '<h3 class="text-gray-900 text-3xl">Employee Approved</h3>';
+                 } elseif ($access_lvl == 5) {
+                   $qry2 = "INSERT INTO patient (user_id) VALUES ('$user_id')";
+                   $rslt2 = $conn->query($qry2);
+                   echo '<h3 class="text-gray-900 text-3xl">Patient Approved</h3>';
+                 } else {
+                   $qry2 = "INSERT INTO family (user_id) VALUES ('$user_id')";
+                   $rslt2 = $conn->query($qry2);
+                   echo '<h3 class="text-gray-900 text-3xl">Family Member Approved</h3>';
+                 }
+                 } else {
+                   $qry = "DELETE FROM user WHERE user_id= '$user_id'";
+                   $rslt = $conn->query($qry);
+                   if ($rslt == TRUE) {
+                     echo '<h3 class="text-gray-900 text-3xl">User deleted</h3>';
+                   } else {
+                       echo '<h3 class="text-gray-900 text-3xl">Error deleting record: </h3>' . $conn->error;
+                   }
+                 }
+        }
+        ?>
 
 
             <!-- More people... -->
@@ -172,7 +174,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           </tr>
 <?php }
 } else {
-  ?> <div class="flex items-center"><h3>All users approved</h3></div>
+  ?> <div class="flex items-center"><h3 class="text-gray-900 text-3xl">All users approved</h3></div>
 <?php }
   ?>
           </tbody>
