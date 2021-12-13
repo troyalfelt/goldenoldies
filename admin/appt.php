@@ -120,7 +120,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               $query2 = "INSERT INTO appointment (date, dr_id, patient_id) VALUES('$date', '$dr_id', '$patient_id')";
               $result2 = $conn->query($query2);
               if ($result2 == TRUE) {
-                echo '<h3>New appointment created for ' . $date '</h3>';
+                echo '<h3>New appointment created for ' . $date . '</h3>';
               } else {
                 echo "Error: " . $query2 . "<br>" . $conn->error;
               }
