@@ -123,7 +123,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 
                 // function to connect and execute the query
                 ?>
-      <?php //$sql = "SELECT user.user_id, user.fname, user.lname, user.role_name, employee.salary FROM user, employee WHERE user.user_id = employee.user_id";
+      <?php
 
       if ($search_result !== false && $search_result->num_rows > 0) {
         while($row = $search_result->fetch_assoc()) {
@@ -151,7 +151,6 @@ $conn = new mysqli($servername, $username, $password, $db);
         </h2>
       </div>
       <form class="mt-8 space-y-6" action="" method="POST">
-        <?php //echo"<input type='hidden' name='user_id' value=" . $row['user_id'] . ">";?>
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
             <label for="user_id" class="sr-only">Employee ID</label>
@@ -159,7 +158,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           </div>
           <div>
             <label for="salary" class="sr-only">Salary</label>
-            <input id="pay_change" name="pay_change" type="text" placeholder="New Salary<?php //echo $row['salary'];?>" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+            <input id="pay_change" name="pay_change" type="text" placeholder="New Salary" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
           </div>
         </div>
         <div>
