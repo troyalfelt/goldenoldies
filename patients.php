@@ -92,13 +92,14 @@ $conn = new mysqli($servername, $username, $password, $db);
                 $value = $_POST['value'];
                 // search in all table columns
                 // using concat mysql function
-                $query = "SELECT * FROM user JOIN patient WHERE user.user_id = patient.patient_id AND CONCAT(patient_id, fname, lname, admit_date, emer_phone, contact, age) LIKE '%$value%'";
+                $query = "SELECT *, TIMESTAMPDIFF(year, user.dob, CURDATE()) AS age FROM user JOIN patient WHERE user.user_id = patient.user_id AND CONCAT(user.user_id, fname, lname, admit_date, emer_phone, emer_contact) LIKE '%$value%'";
                 $search_result = $conn->query($query);
 
 
                 }
                  else {
-                  $query = "SELECT patient.patient_id, user.fname, user.lname, patient.age, patient.contact, patient.emer_phone, patient.admit_date FROM user, patient WHERE user.user_id = patient.patient_id";
+
+                  $query = "SELECT user.user_id, user.fname, user.lname, user.emer_contact, user.emer_phone,  TIMESTAMPDIFF(year, user.dob, CURDATE()) AS age, patient.admit_date FROM user, patient WHERE user.user_id = patient.user_id";
                     $search_result = $conn->query($query);
 
                 }
@@ -108,17 +109,18 @@ $conn = new mysqli($servername, $username, $password, $db);
                    if ($search_result !== false && $search_result->num_rows > 0) {
                          while($row = $search_result->fetch_assoc()) {
                            ?><tr>
-                     <?php echo "<td>" . $row["patient_id"]. "</td>"?>
-                     <?php echo "<td>" . $row["fname"]. "</td>"?>
-                     <?php echo "<td>" . $row["lname"]. "</td>"?>
-                     <?php echo "<td>" . $row["age"]. "</td>"?>
-                     <?php echo "<td>" . $row["emer_phone"]. "</td>"?>
-                     <?php echo "<td>" . $row["contact"]. "</td>"?>
-                     <?php echo "<td>" . $row["admit_date"]. "</td>"?>
+                     <?php echo "<td>" . $row["user_id"]. "</td>";?>
+                     <?php echo "<td>" . $row["fname"]. "</td>";?>
+                     <?php echo "<td>" . $row["lname"]. "</td>";?>
+                     <?php echo "<td>" . $row["age"]. "</td>";?>
+                     <?php echo "<td>" . $row["emer_phone"]. "</td>";?>
+                     <?php echo "<td>" . $row["emer_contact"]. "</td>";?>
+                     <?php echo "<td>" . $row["admit_date"]. "</td></tr>";?>
                    <?php }
+                 } else {
+                   echo 'not working';
                  }
                  ?>
-               </tr>
           </tbody>
         </table>
       </div>

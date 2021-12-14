@@ -31,15 +31,15 @@ $conn = new mysqli($servername, $username, $password, $db);
 </head>
 <body>
   <body class="h-full">
-  <nav class="bg-gray-800">
+  <nav class="bg-gray-800 min-w-full">
       <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
           <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4">
-                <a href="home.php" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
-                <a href="../patients.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patients</a>
+                <a href="home.php" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" >Home</a>
+                <a href="../patients.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" aria-current='page'>Patients</a>
               </div>
             </div>
           </div>
@@ -63,33 +63,32 @@ $conn = new mysqli($servername, $username, $password, $db);
     }
   }
   //displays most recent past appointment
-  echo "<h2>Most recent appointment for $patient_name</h2>";
+  echo "<h2 class='text-gray-900 text-4xl'>Most recent appointment for $patient_name</h2>";
   $sql = "SELECT a.date, a.comment, a.morn_med, a.aft_med, a.night_med, a.dr_id, CONCAT(u.fname, ' ', u.lname) as dr_name
   FROM appointment a, user u WHERE a.patient_id='$patient_id' AND a.date < '$today' AND a.dr_id = u.user_id ORDER BY a.date DESC LIMIT 1";
   $result = $conn->query($sql);
+  echo '<table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Date
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Comment
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Morning Medicine
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Afternoon Medicine
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Night Medicine
+        </th>
+        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Doctor
+        </th></tr>';
   if ($result->num_rows > 0) {
-      echo '<table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Date
-            </th>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Comment
-            </th>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Morning Medicine
-            </th>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Afternoon Medicine
-            </th>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Night Medicine
-            </th>
-            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Doctor
-            </th></tr>';
-
             while($row = $result->fetch_assoc()) {
               $date = $row['date'];
               $dr_name = $row['dr_name'];
@@ -193,21 +192,21 @@ $conn = new mysqli($servername, $username, $password, $db);
           }
           echo "</tbody></table>";
           } else {
-          echo "<h3>No past appointments</h3>";
+            echo '<h3 class="text-gray-900 text-3xl">No past appointments</h3></tbody></table>';
           }
 ?>
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+        <br><br>
         <div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Next Appointment
         </h2>
-
+      </div>
           <?php $sql = "SELECT a.date, CONCAT(u.fname, ' ', u.lname) as dr_name FROM appointment a, user u WHERE a.patient_id='$patient_id'
             AND a.date >= '$today' AND a.dr_id = u.user_id AND a.comment IS NULL ORDER BY a.date ASC LIMIT 1";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
               ?>
+
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -231,6 +230,8 @@ $conn = new mysqli($servername, $username, $password, $db);
                       Doctor
                     </th>
                   </tr>
+                  <thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
               <?php
               while($row = $result->fetch_assoc()) {
                 $next_date = $row['date'];
@@ -260,7 +261,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                             <div class="flex items-center">
                               <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
-                                <input type="text" name="morn_med" placeholder="Morning Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
+                                <input type="text" name="morn_med" placeholder="Morning Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                                 </div>
                               </div>
                             </div>
@@ -269,7 +270,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                             <div class="flex items-center">
                               <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
-                                <input type="text" name="aft_med" placeholder="Afternoon Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
+                                <input type="text" name="aft_med" placeholder="Afternoon Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                                 </div>
                               </div>
                             </div>
@@ -278,7 +279,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                             <div class="flex items-center">
                               <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
-                                <input type="text" name="night_med" placeholder="Night Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
+                                <input type="text" name="night_med" placeholder="Night Medicine" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                                 </div>
                               </div>
                             </div>
@@ -344,9 +345,10 @@ $conn = new mysqli($servername, $username, $password, $db);
 
               }
             } else {
-              echo "<h3>No appointments scheduled<h3>";
+              echo '<h3 class="text-gray-900 text-3xl">No appointments scheduled</h3></tr></tbody></table>';
             }
-            echo "</table>";?>
+            echo "</tr></tbody></table>";?>
+
 <?php
 if (isset($_POST['submit'])) {
   $comment = $_POST['comment'];
@@ -356,7 +358,7 @@ if (isset($_POST['submit'])) {
   $sql2 = "UPDATE appointment SET comment = '$comment', morn_med = '$morn_med', aft_med = '$aft_med', night_med='$night_med' WHERE patient_id='$patient_id' AND date = '$today'";
   $result2 = $conn->query($sql2);
   if ($result2 == TRUE) {
-    echo 'Appointment succesfully completed';
+    echo '<h3 class="text-gray-900 text-3xl">Appointment succesfully completed</h3>';
     $complete = "UPDATE routine SET dr_appt = 1 WHERE patient_id='$patient_id' AND date='$today'";
     $completed = $conn->query($complete);
   } else {

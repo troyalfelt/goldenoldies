@@ -47,7 +47,7 @@ error_reporting(E_ALL);
         </div>
       </div>
   </nav>
-  <h2>Welcome</h2>
+  <h2 class="text-gray-900 text-3xl">Welcome, <?php echo $_SESSION['name'];?></h2>
   <?php
 
   $today = date('Y-m-d');
@@ -288,9 +288,7 @@ error_reporting(E_ALL);
               }
 
             }
-            } else {
-              echo 'not funky';
-        }
+            }
       }
     }
     echo "</tbody></table>";
@@ -313,11 +311,11 @@ error_reporting(E_ALL);
         } elseif ($cg4 == $caregiver_id) {
           display_group(4);
         } else {
-          echo "No patients scheduled for today";
+          echo '<h3 class="text-gray-900 text-3xl">No patients scheduled for today</h3>';
         }
       }
     } else {
-      echo "No roster set for today. Please contact your supervisor.";
+      echo '<h3 class="text-gray-900 text-3xl">No roster set for today. Please contact your supervisor.</h3>';
     }
     ?>
 </body>

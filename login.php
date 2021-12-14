@@ -22,42 +22,6 @@ $conn = new mysqli($servername, $username, $password, $db);
 ?>
 
 
-<?php if (isset($_POST['submit'])) {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $sql = "SELECT user.user_id, email, fname, lname, password, family_code, user.role_name, roles.access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
-  $result = mysqli_query($conn, $sql);
-  if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-      $_SESSION['user_id'] = $row['user_id'];
-      $_SESSION['email'] = $email;
-      $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
-      $_SESSION['role_name'] = $row['role_name'];
-      $_SESSION['access_lvl'] = $row['access_lvl'];
-      $_SESSION['fcode'] = $row['familly_code'];
-    }
-    if ($_SESSION['access_lvl'] <= 2) {
-      header("Location: admin/new-roster.php");
-    } elseif ($_SESSION['access_lvl'] == 3) {
-      header("Location: doctor/home.php");
-    } elseif ($_SESSION['access_lvl'] == 4) {
-      header("Location: caregiver/home.php");
-    } elseif ($_SESSION['access_lvl'] == 5) {
-      if ($_SESSION['family_code'] == TRUE) {
-      header("Location: patient/home.php");
-    } else {
-      $_SESSION['temp_id'] = $_SESSION['user_id'];
-      header("Location: patient_register.php");
-    }
-    } elseif ($_SESSION['access_lvl'] == 6) {
-      header("Location: family.php");
-    }
-
-  } else {
-    echo 'Incorrect username/password';
-  }
-}
-?>
 
 <body class="h-full">
 <nav class="bg-gray-800">
@@ -79,6 +43,44 @@ $conn = new mysqli($servername, $username, $password, $db);
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
+
+        <?php if (isset($_POST['submit'])) {
+          $email = $_POST['email'];
+          $password = $_POST['password'];
+          $sql = "SELECT user.user_id, email, fname, lname, password, family_code, user.role_name, roles.access_lvl FROM user, roles WHERE user.role_name = roles.role_name AND email='$email' AND password='$password' AND approved=1";
+          $result = mysqli_query($conn, $sql);
+          if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+              $_SESSION['user_id'] = $row['user_id'];
+              $_SESSION['email'] = $email;
+              $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
+              $_SESSION['role_name'] = $row['role_name'];
+              $_SESSION['access_lvl'] = $row['access_lvl'];
+              $_SESSION['fcode'] = $row['familly_code'];
+            }
+            if ($_SESSION['access_lvl'] <= 2) {
+              header("Location: admin/new-roster.php");
+            } elseif ($_SESSION['access_lvl'] == 3) {
+              header("Location: doctor/home.php");
+            } elseif ($_SESSION['access_lvl'] == 4) {
+              header("Location: caregiver/home.php");
+            } elseif ($_SESSION['access_lvl'] == 5) {
+              if ($_SESSION['family_code'] == TRUE) {
+              header("Location: patient/home.php");
+            } else {
+              $_SESSION['temp_id'] = $_SESSION['user_id'];
+              header("Location: patient_register.php");
+            }
+            } elseif ($_SESSION['access_lvl'] == 6) {
+              header("Location: family.php");
+            }
+
+          } else {
+           echo '<h3 class="text-gray-900 text-3xl">Incorrect username/password</h3>';
+
+          }
+        }
+        ?>
       </div>
       <form class="mt-8 space-y-6" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <input type="hidden" name="remember" value="true">

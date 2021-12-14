@@ -73,6 +73,9 @@ $conn = new mysqli($servername, $username, $password, $db);
                 Patient's Name
               </th>
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Date
+              </th>
+              <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Morning Medicine
               </th>
               <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -119,16 +122,18 @@ $conn = new mysqli($servername, $username, $password, $db);
                           echo $patient_name . "</div></div></div></td>";
 
                       }
-                        $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner FROM routine WHERE patient_id='$patient_id' AND date='$date'";
+                        $sql = "SELECT morn_status, aft_status, night_status, breakfast, lunch, dinner, dr_appt FROM routine WHERE patient_id='$patient_id' AND date='$date'";
                         $result = $conn->query($sql);
                         if ($result->num_rows >0) {
                           while ($row = $result->fetch_assoc()) {
-                            $morn_status = $row['morn_status'];
+                          $morn_status = $row['morn_status'];
                           $aft_status = $row['aft_status'];
                           $night_status = $row['night_status'];
                           $breakfast = $row['breakfast'];
                           $lunch = $row['lunch'];
                           $dinner = $row['dinner'];
+                          $dr_appt = $row['dr_appt'];
+                          echo "<td>" . $date . "</td>";
                           if ($morn_status == 0) {
                             echo "<td>Incomplete</td>";
                           } elseif ($morn_status == 1) {
@@ -139,17 +144,14 @@ $conn = new mysqli($servername, $username, $password, $db);
                           if ($aft_status == 0) {
                                 echo "<td>Incomplete</td>";
                           } elseif ($aft_status == 1) {
-
                             echo "<td>Completed</td><";
                           } else {
-
                             echo "<td>None assigned</td>";
                           }
-
                           if ($night_status == 0) {
                               echo "<td>Incomplete</td>";
                           } elseif ($night_status == 1) {
-                            echo "<td>Completed</td><input type='hidden' name='night_status' value='completed'>";
+                            echo "<td>Completed</td>";
                           } else {
                             echo "<td>None assigned</td>";
                           }
@@ -161,7 +163,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                           if ($lunch == 0) {
                               echo "<td>Incomplete</td>";
                           } elseif ($lunch == 1) {
-                            echo "<td>Completed<td>";
+                            echo "<td>Completed</td>";
                           }
                           if ($dinner == 0) {
                               echo "<td>Incomplete</td>";
@@ -187,18 +189,18 @@ $conn = new mysqli($servername, $username, $password, $db);
                             echo "<td>None assigned</td>";
                           }
                         }
-                        }
+                      } else {
+                        echo '<h3 class="text-gray-900 text-3xl">No schedule set for that date, please contact administrator</h3></tr></tbody></table>';
+                      }
                         echo "</tr></tbody></table>";
                       } else {
-                        echo 'No schedule set for that date, please contact administrator';
+                        echo '<h3 class="text-gray-900 text-3xl">Incorrect family code/patient id</h3></tr></tbody></table>';
                       }
 
 
                   } else {
-                    echo 'Incorrect patient id/family code';
+                    echo '<h3 class="text-gray-900 text-3xl">Please select a past date</h3>';
                   }
-                } else {
-                  echo 'Please choose a past date';
                 }
 
                       ?>
@@ -207,7 +209,7 @@ $conn = new mysqli($servername, $username, $password, $db);
 
 
           </tbody>
-        </table>
+        </table-->
       </div>
     </div>
   </div>
