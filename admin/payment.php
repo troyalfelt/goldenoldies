@@ -54,10 +54,10 @@ $conn = new mysqli($servername, $username, $password, $db);
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Payment
         </h2>
-        <form action='' method='POST'>
-          <label for='patient_id'>Patient ID</label>
-          <input type='text' name='patient_id'>
-          <input type='submit' name='submit'>
+        <form action='' method='POST' class="mt-8 space-y-6">
+          <label for='patient_id'>Patient ID</label><br>
+          <input type='text' name='patient_id' class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"><br>
+          <input type='submit' name='submit'><br>
         </form>
         <?php if (isset($_POST['submit'])) {
           $patient_id = $_POST['patient_id'];
@@ -95,8 +95,8 @@ $conn = new mysqli($servername, $username, $password, $db);
               }
           }
           //get amount from medicines
-          $sql = "SELECT COUNT(morn_status) AS morn_count, COUNT(aft_status) AS aft_count, COUNT(night_status) AS night_count WHERE
-                  user_id='$patient_id' AND (morn_status = 1 OR aft_status = 1 OR night_status = 1)";
+          $sql = "SELECT patient_id, COUNT(morn_status) AS morn_count, COUNT(aft_status) AS aft_count, COUNT(night_status) AS night_count FROM routine WHERE
+                  patient_id='$patient_id' AND (morn_status = 1 OR aft_status = 1 OR night_status = 1)";
                   $result = $conn->query($sql);
                   if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -105,16 +105,16 @@ $conn = new mysqli($servername, $username, $password, $db);
                     }
                 }
             //echo the amount owed
-            echo "Total owed: $" . $total_owed;
-            echo '<form action="" method="POST">
-                  <label for="total_paid">Amount Paid</label>
-                  <input type="text" name="total_paid">
-                  <input type="hidden" name="patient_id" value=' . $patient_id . '><input type="submit" name="pay" value="make payment">
+            echo 'Patient ID: ' . $patient_id . "<br>Total owed: $" . $total_owed;
+            echo '<form action="" method="POST"  class="mt-8 space-y-6">
+                  <label for="total_paid">Amount Paid</label><br>
+                  <input type="text" name="total_paid" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"><br>
+                  <input type="hidden" name="patient_id" value=' . $patient_id . '><input type="submit" name="pay" value="Make Payment">
 
                   </form>';
           } else {
             //if theres no patient result
-            echo 'No such patient';
+            echo '<h3 class="text-gray-900 text-2xl">No such patient</h3>';
           }
         } elseif ($_POST['pay']) {
           //if second form is submitted to make payment
@@ -123,7 +123,7 @@ $conn = new mysqli($servername, $username, $password, $db);
           $sql = "UPDATE patient SET total_paid = total_paid + '$total_paid' WHERE user_id = '$patient_id'";
           $result = $conn->query($sql);
           if ($result == TRUE) {
-            echo "Payment made succesfully";
+            echo '<h3 class="text-gray-900 text-2xl">Payment made successfully</h3>';
         } else {
           echo 'Error';
         }

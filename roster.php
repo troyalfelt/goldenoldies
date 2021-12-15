@@ -34,15 +34,24 @@ $conn = new mysqli($servername, $username, $password, $db);
 
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+    <div class="py-2 align-middle inline-block min-w-800 sm:px-6 lg:px-8">
         <h1 class="text-gray-900 text-5xl">Roster</h1>
-            <div style="text-align: center"> Date:  <?php
-            echo date("Y-n-d");
-            ?>
+            <div style="text-align: center">
+            <form name='date' action='' method='POST' class="mt-8 space-y-6">
+              <input type='date' name='date' class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" required>
+              <input value='Check Roster' name='submit' type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            </form>
         </div>
-        <?php
 
-            $sql = "SELECT date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id FROM roster WHERE date = date(now())";
+        <?php
+        function displayRoster($date) {
+          echo "Date: " . $date;
+          $servername = "localhost";
+          $username = "troyalfelt";
+          $password = "";
+          $db = 'test';
+          $conn = new mysqli($servername, $username, $password, $db);
+            $sql = "SELECT date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id FROM roster WHERE date = '$date'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -80,7 +89,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
                       <?php
-                      $query = "SELECT roster.date, user.user_id, roster.supervisor_id, CONCAT(user.fname, ' ', user.lname) AS full FROM user, roster WHERE roster.supervisor_id = user.user_id AND roster.date = date(now())";
+                      $query = "SELECT roster.date, user.user_id, roster.supervisor_id, CONCAT(user.fname, ' ', user.lname) AS full FROM user, roster WHERE roster.supervisor_id = user.user_id AND roster.date = '$date'";
                       $result = $conn->query($query);
                         if ($result !== false && $result->num_rows > 0) {
                           while($row = $result->fetch_assoc()) {
@@ -98,7 +107,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                   <div class="ml-4">
                     <div class="text-sm font-medium text-gray-900">
                       <?php
-                      $query = "SELECT roster.date, user.user_id, roster.dr_id, CONCAT(user.fname, ' ', user.lname) AS full1 FROM user, roster WHERE roster.dr_id = user.user_id AND roster.date = date(now())";
+                      $query = "SELECT roster.date, user.user_id, roster.dr_id, CONCAT(user.fname, ' ', user.lname) AS full1 FROM user, roster WHERE roster.dr_id = user.user_id AND roster.date = '$date'";
                       $result = $conn->query($query);
                         if ($result !== false && $result->num_rows > 0) {
                           while($row = $result->fetch_assoc()) {
@@ -114,7 +123,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
                   <?php
-                  $query = "SELECT roster.date, user.user_id, roster.caregiver1_id, CONCAT(user.fname, ' ', user.lname) AS full2 FROM user, roster WHERE roster.caregiver1_id = user.user_id AND roster.date = date(now())";
+                  $query = "SELECT roster.date, user.user_id, roster.caregiver1_id, CONCAT(user.fname, ' ', user.lname) AS full2 FROM user, roster WHERE roster.caregiver1_id = user.user_id AND roster.date = '$date'";
                   $result = $conn->query($query);
                     if ($result !== false && $result->num_rows > 0) {
                       while($row = $result->fetch_assoc()) {
@@ -128,7 +137,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
                   <?php
-                  $query = "SELECT roster.date, user.user_id, roster.caregiver2_id, CONCAT(user.fname, ' ', user.lname) AS full3 FROM user, roster WHERE roster.caregiver2_id = user.user_id AND roster.date = date(now())";
+                  $query = "SELECT roster.date, user.user_id, roster.caregiver2_id, CONCAT(user.fname, ' ', user.lname) AS full3 FROM user, roster WHERE roster.caregiver2_id = user.user_id AND roster.date = '$date'";
                   $result = $conn->query($query);
                     if ($result !== false && $result->num_rows > 0) {
                       while($row = $result->fetch_assoc()) {
@@ -142,7 +151,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
                   <?php
-                  $query = "SELECT roster.date, user.user_id, roster.caregiver3_id, CONCAT(user.fname, ' ', user.lname) AS full4 FROM user, roster WHERE roster.caregiver3_id = user.user_id AND roster.date = date(now())";
+                  $query = "SELECT roster.date, user.user_id, roster.caregiver3_id, CONCAT(user.fname, ' ', user.lname) AS full4 FROM user, roster WHERE roster.caregiver3_id = user.user_id AND roster.date = '$date'";
                   $result = $conn->query($query);
                     if ($result !== false && $result->num_rows > 0) {
                       while($row = $result->fetch_assoc()) {
@@ -156,7 +165,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
                   <?php
-                  $query = "SELECT roster.date, user.user_id, roster.caregiver4_id, CONCAT(user.fname, ' ', user.lname) AS full5 FROM user, roster WHERE roster.caregiver4_id = user.user_id AND roster.date = date(now())";
+                  $query = "SELECT roster.date, user.user_id, roster.caregiver4_id, CONCAT(user.fname, ' ', user.lname) AS full5 FROM user, roster WHERE roster.caregiver4_id = user.user_id AND roster.date = '$date'";
                   $result = $conn->query($query);
                     if ($result !== false && $result->num_rows > 0) {
                       while($row = $result->fetch_assoc()) {
@@ -176,9 +185,23 @@ $conn = new mysqli($servername, $username, $password, $db);
 </div>
 
     <?php }
+  } else {
+    echo '<h3 class="mt-6 text-center text-2xl font-extrabold text-gray-900">No roster set for that date, please contact Administrator</h2>';
+
   }
+}
  ?>
-</tr>
+ <?php
+
+ if (isset($_POST['submit'])) {
+
+   displayRoster($_POST['date']);
+ } else {
+
+   displayRoster(date('Y-m-d'));
+ }?>
+
+
 
 </body>
 </html>

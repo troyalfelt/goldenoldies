@@ -134,7 +134,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                   if ($lunch == 0) {
                       echo "<td>Incomplete</td>";
                   } elseif ($lunch == 1) {
-                    echo "<td>Completed<td>";
+                    echo "<td>Completed</td>";
                   }
                   if ($dinner == 0) {
                       echo "<td>Incomplete</td>";
@@ -202,7 +202,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                     if ($night_status == 0) {
                         echo "<td>Incomplete</td>";
                     } elseif ($night_status == 1) {
-                      echo "<td>Completed</td><input type='hidden' name='night_status' value='completed'>";
+                      echo "<td>Completed</td>";
                     } else {
                       echo "<td>None assigned</td>";
                     }
@@ -214,7 +214,7 @@ $conn = new mysqli($servername, $username, $password, $db);
                     if ($lunch == 0) {
                         echo "<td>Incomplete</td>";
                     } elseif ($lunch == 1) {
-                      echo "<td>Completed<td>";
+                      echo "<td>Completed</td>";
                     }
                     if ($dinner == 0) {
                         echo "<td>Incomplete</td>";

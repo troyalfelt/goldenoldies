@@ -4,6 +4,15 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   ?>
   <?php
+    session_start();
+    if (!isset($_SESSION['access_lvl'])) {
+      header("Location: ../login.php");
+    } else {
+      if ($_SESSION['access_lvl'] !== '1') {
+        header("Location: ../login.php");
+    }
+  }
+  <?php
   $servername = "localhost";
   $username = "troyalfelt";
   $password = "";
@@ -46,6 +55,7 @@ error_reporting(E_ALL);
               <a href="info.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patient Info</a>
               <a href="new-roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">New Roster</a>
               <a href="report.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Report</a>
+                  <a href="payment.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Payment</a>
             </div>
           </div>
         </div>

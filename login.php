@@ -56,7 +56,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               $_SESSION['name'] = $row['fname'] . " " . $row['lname'];
               $_SESSION['role_name'] = $row['role_name'];
               $_SESSION['access_lvl'] = $row['access_lvl'];
-              $_SESSION['fcode'] = $row['familly_code'];
+              $_SESSION['fcode'] = $row['family_code'];
             }
             if ($_SESSION['access_lvl'] <= 2) {
               header("Location: admin/new-roster.php");
@@ -65,11 +65,13 @@ $conn = new mysqli($servername, $username, $password, $db);
             } elseif ($_SESSION['access_lvl'] == 4) {
               header("Location: caregiver/home.php");
             } elseif ($_SESSION['access_lvl'] == 5) {
-              if ($_SESSION['family_code'] == TRUE) {
+              if ($_SESSION['fcode'] == TRUE) {
+
               header("Location: patient/home.php");
             } else {
               $_SESSION['temp_id'] = $_SESSION['user_id'];
               header("Location: patient_register.php");
+
             }
             } elseif ($_SESSION['access_lvl'] == 6) {
               header("Location: family.php");

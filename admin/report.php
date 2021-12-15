@@ -43,6 +43,8 @@ error_reporting(E_ALL);
               <a href="info.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patient Info</a>
               <a href="new-roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">New Roster</a>
               <a href="roles.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roles</a>
+              <a href="payment.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Payment</a>
+
             </div>
           </div>
         </div>
@@ -169,7 +171,7 @@ error_reporting(E_ALL);
             echo "</tbody></table>";
           } else {
             //if theres no routine that day
-            echo 'no routine set for that day';
+            echo 'No routine set for that day';
           }
         } else {
           //if its a future date
