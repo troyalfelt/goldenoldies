@@ -40,6 +40,7 @@ $conn = new mysqli($servername, $username, $password, $db);
               <div class="flex space-x-4">
                 <a href="home.php" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" >Home</a>
                 <a href="../patients.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" aria-current='page'>Patients</a>
+                <a href="../roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roster</a>
               </div>
             </div>
           </div>

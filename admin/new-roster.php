@@ -26,26 +26,7 @@ $db = 'test';
 $conn = new mysqli($servername, $username, $password, $db);
 ?>
 
-<?php
-if (isset($_POST['submit'])) {
-$date = $_POST['date'];
-$supervisor = $_POST['supervisor'];
-$doctor = $_POST['doctor'];
-$caregiver1 = $_POST['caregiver1'];
-$caregiver2 = $_POST['caregiver2'];
-$caregiver3 = $_POST['caregiver3'];
-$caregiver4 = $_POST['caregiver4'];
-$sql = "INSERT INTO roster (date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id)
-        VALUES('$date', '$supervisor', '$doctor', '$caregiver1', '$caregiver2', '$caregiver3', '$caregiver4')";
-$result = $conn->query($sql);
-if ($result == TRUE) {
-  echo 'New roster created for ' . $date;
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
-}
 
-}
-?>
 <!DOCTYPE html>
 <html class="h-full bg-gray-50" lang="en">
 <head>
@@ -70,6 +51,7 @@ if ($result == TRUE) {
               <a href="report.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Report</a>
               <a href="roles.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roles</a>
               <a href="payment.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Payment</a>
+              <a href="../roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roster</a>
 
             </div>
           </div>
@@ -83,6 +65,26 @@ if ($result == TRUE) {
 <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
   <h1 class="text-gray-900 text-5xl">New Roster</h1>
+  <?php
+  if (isset($_POST['submit'])) {
+  $date = $_POST['date'];
+  $supervisor = $_POST['supervisor'];
+  $doctor = $_POST['doctor'];
+  $caregiver1 = $_POST['caregiver1'];
+  $caregiver2 = $_POST['caregiver2'];
+  $caregiver3 = $_POST['caregiver3'];
+  $caregiver4 = $_POST['caregiver4'];
+  $sql = "INSERT INTO roster (date, supervisor_id, dr_id, caregiver1_id, caregiver2_id, caregiver3_id, caregiver4_id)
+          VALUES('$date', '$supervisor', '$doctor', '$caregiver1', '$caregiver2', '$caregiver3', '$caregiver4')";
+  $result = $conn->query($sql);
+  if ($result == TRUE) {
+    echo 'New roster created for ' . $date;
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+
+  }
+  ?>
     <div class="p-4 shadow-md rounded-md text-left">
       <form class="mt-8 space-y-6" action="" method="post">
         <div>

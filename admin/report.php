@@ -44,7 +44,7 @@ error_reporting(E_ALL);
               <a href="new-roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">New Roster</a>
               <a href="roles.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roles</a>
               <a href="payment.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Payment</a>
-
+              <a href="../roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roster</a>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ error_reporting(E_ALL);
               if ($lunch == 0) {
                   echo "<td>Incomplete</td>";
               } elseif ($lunch == 1) {
-                echo "<td>Completed<td>";
+                echo "<td>Completed</td>";
               }
               if ($dinner == 0) {
                   echo "<td>Incomplete</td>";

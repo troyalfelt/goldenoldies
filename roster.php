@@ -26,7 +26,7 @@ $conn = new mysqli($servername, $username, $password, $db);
             <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <a href="../logout.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+            <a href="logout.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</a>
         </div>
       </div>
     </div>

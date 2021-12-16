@@ -37,6 +37,7 @@ error_reporting(E_ALL);
           <h1 class="text-yellow-400 text-5xl">Golden Oldies</h1>
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4">
+                <a href="../roster.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Roster</a>
                 <a href="info.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Patient Info</a>
               </div>
             </div>
